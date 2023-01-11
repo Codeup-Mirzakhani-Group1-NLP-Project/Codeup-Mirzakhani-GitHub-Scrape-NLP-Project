@@ -28,9 +28,6 @@ from env import github_token, github_username
 
 
 
-REPOS = []
-
-
 headers = {"Authorization": f"token {github_token}", "User-Agent": github_username}
 
 if headers["Authorization"] == "token " or headers["User-Agent"] == "":
@@ -47,7 +44,7 @@ def get_repo_links():
     '''
     filename = 'REPOS.json'
     REPOS=[]
-    headers = {"Authorization": f"token {github_token}", "User-Agent": github_username}
+    #headers = {"Authorization": f"token {github_token}", "User-Agent": github_username}
     languages = ['JavaScript', 'Python', 'C#', 'Java']
     # if the json file is available
     if os.path.isfile(filename):
@@ -89,7 +86,7 @@ def get_repo_links():
             json.dump(REPOS, outfile)
     return REPOS
 
-
+REPOS = get_repo_links()
 
 
 def github_api_request(url: str) -> Union[List, Dict]:
@@ -160,9 +157,19 @@ def process_repo(repo: str) -> Dict[str, str]:
 
 def scrape_github_data() -> List[Dict[str, str]]:
     """
+    WARNING!!! VERY SLOW. IF DON'T HAVE A JSON FILE MAKE SURE TO RUN THIS FUNCTION AT LEAST FOR 1 HR
+
     Loop through all of the repos and process them. Returns the processed data.
     """
-    return [process_repo(repo) for repo in REPOS]
+    if os.path.isfile('data.json'):
+        # read from json file
+        with open('data.json', "r") as json_file:
+            data = json.load(json_file)
+    else:
+        data = [process_repo(repo) for repo in REPOS]
+        with open('data.json', "w") as outfile:
+            json.dump(data, outfile)
+    return data
 
 
 if __name__ == "__main__":
