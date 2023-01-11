@@ -1,0 +1,5 @@
+host = 'data.codeup.com' 
+user = 'leavitt_1872'
+password = 'arV3dFWpZeOnEmvIdxszjVfyMKCTVy1J'
+github_username = 'Zachary-Stufflebeme'
+github_token = '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'
