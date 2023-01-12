@@ -4,6 +4,7 @@ import unicodedata
 import re
 import nltk
 from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import MinMaxScaler
 from nltk.corpus import stopwords
 from bs4 import BeautifulSoup
 import nltk.sentiment
@@ -193,16 +194,60 @@ def get_clean_df() -> pd.DataFrame:
     #df['stemmed'] = news_df.clean.apply(stem)
     # only lemmas
     df['lemmatized'] = df.clean.apply(lemmatize)
+    # ENGINEER FEATURES BASED ON THE CLEAN TEXT COLUMN
     sia = nltk.sentiment.SentimentIntensityAnalyzer()
+    # adds counpound sentiment score
     df['sentiment'] = df['clean'].apply(lambda doc: sia.polarity_scores(doc)['compound'])
+    # numerical
+    df['lem_length'] = df.lemmatized.str.len()
+    df['original_length'] = df.original.str.len()
+    df['clean_length'] = df.clean.str.len()
+    df['length_diff'] = df.original_length - df.clean_length
+    # categorical
+    df['has_#9'] = np.where(df.clean.str.contains('&#9;'), 1, 0)
+    df['has_parts'] = np.where((df.clean.str.contains(' part ')) | (df.clean.str.contains('parts')), 1, 0)
+    df['has_fix'] = np.where(df.clean.str.contains(' fix '), 1, 0)
+    df['has_tab'] = np.where(df.clean.str.contains(' tab '), 1, 0)
+    df['has_x'] = np.where(df.clean.str.contains(' x '), 1, 0)
+    df['has_v'] = np.where(df.clean.str.contains(' v '), 1, 0)
+    df['has_codeblock'] = np.where(df.clean.str.contains('codeblock'), 1, 0)
+    df['has_image'] = np.where(df.clean.str.contains('image'), 1, 0)
     # change language to category
     df.language = pd.Categorical(df.language)
     # drop repo column
     df.drop('repo', axis=1, inplace=True)
+    # drop 'clean_length' columns, as it is part of length_diff column
+    df.drop('clean_length', axis=1, inplace=True)
     # reorder columns
-    df = df[['original', 'first_clean', 'clean', 'lemmatized', 'sentiment', 'language']]
-    
+    new_order = ['original', 'first_clean', 'clean', 'lemmatized', 'sentiment', 'lem_length',
+        'original_length', 'length_diff', 'has_#9', 'has_tab',\
+        'has_parts', 'has_fix', 'has_x', 'has_v',\
+       'has_codeblock', 'has_image', 'language']
+    df = df[new_order]
     return df
+
+####### PREPARATIONS FOR THE MODELING
+
+def scale_numeric_data(X_train, X_validate, X_test):
+    '''
+    Scales numerical columns.
+    Parameters:
+        train, validate, test data sets
+    Returns:
+    train, validate, test data sets with scaled data
+    '''
+    # features to scale
+    to_scale = ['sentiment', 'lem_length', 'original_length',  'length_diff']
+    # create a scaler
+    sc = MinMaxScaler()
+    sc.fit(X_train[to_scale])
+    # transform data
+    X_train[to_scale] = sc.transform(X_train[to_scale])
+    X_validate[to_scale] = sc.transform(X_validate[to_scale])
+    X_test[to_scale] = sc.transform(X_test[to_scale])
+    
+    return X_train, X_validate, X_test
+
 
 def split_3(df):
     '''
@@ -211,6 +256,9 @@ def split_3(df):
     original dataset, and train is .70*.80= 56% of the original dataset. 
     The function returns, in this order, train, validate and test dataframes. 
     '''
+    explore_columns = ['original', 'first_clean', 'clean', 'lemmatized', 'sentiment', 'lem_length',\
+        'original_length', 'length_diff', 'language']
+    df = df[explore_columns]
     #split_db class verision with random seed
     train_validate, test = train_test_split(df, test_size=0.2, 
                                             random_state=seed, stratify=df[target])
@@ -231,6 +279,7 @@ def split_data(df, explore=True):
         return split_3(df)
     else:
         train, validate, test = split_3(df)
+        train, validate, test = scale_numeric_data(train, validate, test)
         return train.iloc[:, :-1], validate.iloc[:, :-1], test.iloc[:, :-1], \
             train[target], validate[target], test[target]
 
