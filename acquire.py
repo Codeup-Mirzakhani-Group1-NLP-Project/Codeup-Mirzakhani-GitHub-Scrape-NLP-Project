@@ -36,7 +36,7 @@ if headers["Authorization"] == "token " or headers["User-Agent"] == "":
     )
 
 #### FUNCTION TO GET REPO LINKS
-def get_repo_links():
+def get_repo_links() -> List[str]:
     '''
     NOTE!!! VERY SLOW. IF DON'T HAVE A JSON FILE MAKE SURE TO RUN THIS FUNCTION AT LEAST FOR 1 HR
     
@@ -52,7 +52,7 @@ def get_repo_links():
         with open(filename, "r") as json_file:
             REPOS = json.load(json_file)
     else:
-        for i in range(1, 100):
+        for i in range(1, 101):
             print(i)
             if i == 1:
                 start_link = 'https://github.com/search?q=space&type=Repositories'
@@ -86,7 +86,7 @@ def get_repo_links():
             json.dump(REPOS, outfile)
     return REPOS
 
-REPOS = get_repo_links()
+
 
 
 def github_api_request(url: str) -> Union[List, Dict]:
@@ -166,12 +166,8 @@ def scrape_github_data() -> List[Dict[str, str]]:
         with open('data.json', "r") as json_file:
             data = json.load(json_file)
     else:
+        REPOS = get_repo_links()
         data = [process_repo(repo) for repo in REPOS]
         with open('data.json', "w") as outfile:
             json.dump(data, outfile)
     return data
-
-
-if __name__ == "__main__":
-    data = scrape_github_data()
-    json.dump(data, open("data.json", "w"), indent=1)
