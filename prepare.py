@@ -200,7 +200,7 @@ def get_clean_df() -> pd.DataFrame:
     # drop repo column
     df.drop('repo', axis=1, inplace=True)
     # reorder columns
-    df = df[['original', 'first_clean', 'clean', 'lemmatized', 'language']]
+    df = df[['original', 'first_clean', 'clean', 'lemmatized', 'sentiment', 'language']]
     
     return df
 
@@ -235,4 +235,3 @@ def split_data(df, explore=True):
             train[target], validate[target], test[target]
 
 
-#%%
