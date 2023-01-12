@@ -186,7 +186,13 @@ def get_clean_df() -> pd.DataFrame:
     #df['stemmed'] = news_df.clean.apply(stem)
     # only lemmas
     df['lemmatized'] = df.clean.apply(lemmatize)
-
+    # change language to category
+    df.language = pd.Categorical(df.language)
+    # drop repo column
+    df.drop('repo', axis=1, inplace=True)
+    # reorder columns
+    df = df[['original', 'first_clean', 'clean', 'lemmatized', 'language']]
+    
     return df
 
 
