@@ -3,12 +3,11 @@ import numpy as np
 import unicodedata
 import re
 import nltk
+from sklearn.model_selection import train_test_split
 from nltk.corpus import stopwords
 from bs4 import BeautifulSoup
+import nltk.sentiment
 
-from sklearn.model_selection import train_test_split
-from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.feature_extraction.text import TfidfVectorizer
 
 import warnings
 warnings.filterwarnings('ignore')
@@ -194,6 +193,8 @@ def get_clean_df() -> pd.DataFrame:
     #df['stemmed'] = news_df.clean.apply(stem)
     # only lemmas
     df['lemmatized'] = df.clean.apply(lemmatize)
+    sia = nltk.sentiment.SentimentIntensityAnalyzer()
+    df['sentiment'] = df['clean'].apply(lambda doc: sia.polarity_scores(doc)['compound'])
     # change language to category
     df.language = pd.Categorical(df.language)
     # drop repo column
@@ -233,3 +234,5 @@ def split_data(df, explore=True):
         return train.iloc[:, :-1], validate.iloc[:, :-1], test.iloc[:, :-1], \
             train[target], validate[target], test[target]
 
+
+#%%
