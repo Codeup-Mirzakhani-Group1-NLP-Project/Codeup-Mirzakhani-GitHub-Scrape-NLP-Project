@@ -64,7 +64,7 @@ def basic_clean(s:str) -> str:
     # leave only ascii symbols
     s = unicodedata.normalize('NFKD', s).encode('ascii', 'ignore').decode('utf-8')
     # using regex remove everything that is not a letter a-z, number 0-9, whitespace \s or single quote\'
-    s = re.sub('[^a-z0-9\'\s]', '', s)
+    s = re.sub('[^a-z\'\s]', '', s)
     
     return s
 
