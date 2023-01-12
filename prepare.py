@@ -15,6 +15,10 @@ import acquire
 # This is helper file that prepares text for the NLP
 ############################################
 
+###### Global variables ####################
+seed = 42
+target = 'language'
+
 def clean_html_markdown(string: str) -> str:
     '''
     1st cleaning step.
@@ -195,4 +199,33 @@ def get_clean_df() -> pd.DataFrame:
     
     return df
 
+def split_3(df):
+    '''
+    This function takes in a dataframe and splits it into 3 data sets
+    Test is 20% of the original dataset, validate is .30*.80= 24% of the 
+    original dataset, and train is .70*.80= 56% of the original dataset. 
+    The function returns, in this order, train, validate and test dataframes. 
+    '''
+    #split_db class verision with random seed
+    train_validate, test = train_test_split(df, test_size=0.2, 
+                                            random_state=seed, stratify=df[target])
+    train, validate = train_test_split(train_validate, test_size=0.3, 
+                                       random_state=seed, stratify=train_validate[target])
+    return train, validate, test
+
+def split_data(df, explore=True):
+    '''
+    the function accepts a dataframe as a parameter
+    splits according to the purpose
+    for the exploration returns train, validate, test
+    for modeling it drops unneeded columns, creates dummis, and returns
+    6 values X_train, y_train ...
+    '''
+
+    if explore:
+        return split_3(df)
+    else:
+        train, validate, test = split_3(df)
+        return train.iloc[:, :-1], validate.iloc[:, :-1], test.iloc[:, :-1], \
+            train[target], validate[target], test[target]
 
