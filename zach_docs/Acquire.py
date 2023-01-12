@@ -1,9 +1,32 @@
+"""
+A module for obtaining repo readme and language data from the github API.
+
+Before using this module, read through it, and follow the instructions marked TODO.
+
+After doing so, run it like this:
+
+    python acquire.py
+
+To create the `data.json` file that contains the data.
+"""
+import os
 import json
-from typing import Dict, List, Union, cast
+from typing import Dict, List, Optional, Union, cast
 import requests
 from bs4 import BeautifulSoup
+import pandas as pd
+from time import sleep
 
 from env import github_token, github_username
+
+# TODO: Make a github personal access token.
+#     1. Go here and generate a personal access token: https://github.com/settings/tokens
+#        You do _not_ need select any scopes, i.e. leave all the checkboxes unchecked
+#     2. Save it in your env.py file under the variable `github_token`
+# TODO: Add your github username to your env.py file under the variable `github_username`
+# TODO: Add more repositories to the `REPOS` list below.
+
+
 
 headers = {"Authorization": f"token {github_token}", "User-Agent": github_username}
 
@@ -11,6 +34,59 @@ if headers["Authorization"] == "token " or headers["User-Agent"] == "":
     raise Exception(
         "You need to follow the instructions marked TODO in this script before trying to use it"
     )
+
+#### FUNCTION TO GET REPO LINKS
+def get_repo_links() -> List[str]:
+    '''
+    NOTE!!! VERY SLOW. IF DON'T HAVE A JSON FILE MAKE SURE TO RUN THIS FUNCTION AT LEAST FOR 1 HR
+    
+    Scraps the links of the repositories and saves them to the list
+    '''
+    filename = 'REPOS.json'
+    REPOS=[]
+    #headers = {"Authorization": f"token {github_token}", "User-Agent": github_username}
+    languages = ['JavaScript', 'Python', 'C#', 'Java']
+    # if the json file is available
+    if os.path.isfile(filename):
+        # read from json file
+        with open(filename, "r") as json_file:
+            REPOS = json.load(json_file)
+    else:
+        for i in range(1, 101):
+            print(i)
+            if i == 1:
+                start_link = 'https://github.com/search?q=space&type=Repositories'
+            else:
+                start_link = f'https://github.com/search?p={i}&q=space&type=Repositories'
+
+            response = requests.get(start_link, headers=headers)
+            if response.status_code != 200:
+                print('problem' + str(response.status_code))
+                sleep(30)
+                response = requests.get(start_link, headers=headers)
+            print(response.status_code)
+            soup = BeautifulSoup(response.content, 'html.parser')
+
+            all_blocks = soup.find_all('li', class_='repo-list-item hx_hit-repo d-flex flex-justify-start py-4 public source')
+            if type(all_blocks) == None:
+                print('all blocks fail')
+                sleep(30)
+                all_blocks = soup.find_all('li', class_='repo-list-item hx_hit-repo d-flex flex-justify-start py-4 public source')
+            for block in all_blocks:
+                try:
+                    language = block.find('span', itemprop='programmingLanguage').text
+                except:
+                    continue
+                if language in languages:
+                    link = block.find('a', class_='v-align-middle')['href'][1:]
+                    REPOS.append(link)
+            sleep(20)
+        
+        with open(filename, "w") as outfile:
+            json.dump(REPOS, outfile)
+    return REPOS
+
+
 
 
 def github_api_request(url: str) -> Union[List, Dict]:
@@ -79,29 +155,19 @@ def process_repo(repo: str) -> Dict[str, str]:
     }
 
 
-
-def scrape_github_data(REPOS) -> List[Dict[str, str]]:
+def scrape_github_data() -> List[Dict[str, str]]:
     """
+    WARNING!!! VERY SLOW. IF DON'T HAVE A JSON FILE MAKE SURE TO RUN THIS FUNCTION AT LEAST FOR 1 HR
+
     Loop through all of the repos and process them. Returns the processed data.
     """
-    return [process_repo(repo) for repo in REPOS]
-
-
-if __name__ == "__main__":
-    data = scrape_github_data()
-    json.dump(data, open("../nadia_docs/data.json", "w"), indent=1)
-
-def get_repo_links():
-    start_link = 'https://github.com/search?q=space&type=Repositories'
-    headers = {"Authorization": f"token {github_token}", "User-Agent": github_username}
-    response = requests.get(start_link, headers=headers)
-    soup = BeautifulSoup(response.content, 'html.parser')
-    #languages = ['JavaScript', 'Python', 'C#', 'Java']#
-    test_links = []
-    #filename = 'repos.json'
-    all_blocks = soup.find_all('li', class_='repo-list-item hx_hit-repo d-flex flex-justify-start py-4 public source')
-    for block in all_blocks:
-        #language = block.find('span', itemprop='programmingLanguage').text
-        link = block.find('a', class_='v-align-middle')['href'][1:]
-        test_links.append(link)
-    return test_links
+    if os.path.isfile('data.json'):
+        # read from json file
+        with open('data.json', "r") as json_file:
+            data = json.load(json_file)
+    else:
+        REPOS = get_repo_links()
+        data = [process_repo(repo) for repo in REPOS]
+        with open('data.json', "w") as outfile:
+            json.dump(data, outfile)
+    return data
