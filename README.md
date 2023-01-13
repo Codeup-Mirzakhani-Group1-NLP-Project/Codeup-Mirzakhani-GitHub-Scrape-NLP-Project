@@ -45,7 +45,7 @@ Our initial thoughts were that since we centered our GitHub repositories around 
 
 # The Plan
 * Acquire data from GitHub Readme files by scraping the Github API
-* Clean and Prepare the data using RegEx
+* Clean and Prepare the data using RegEx and beautiful soup.
 * Explore data in search of relevant keyword grouping using bi-grams and n-grams 
 * Answer the following initial question:
 
@@ -59,7 +59,7 @@ Our initial thoughts were that since we centered our GitHub repositories around 
 
     * **Question 5.** INSERT_QUESTION_HERE?
 
-* Develop a Model to predict program language based on inut from GitHub Project Readme files.
+* Develop a Model to predict program language of space related projects using either Python, Javascript, Java, or C# based on input from GitHub Project Readme files.
     * Use drivers identified in explore to build predictive models of error using...
     * Evaluate models on train and validate data using RMSE (Root mean square Error)
     * Select the best model based on the least RMSE
@@ -95,42 +95,28 @@ Our initial thoughts were that since we centered our GitHub repositories around 
 
 # Acquire
 
-* ```zillow``` data from Codeup SQL database was used for this project.
-* The data was initially pulled on 15-NOV-2022.
-* The initial DataFrame contained 52,441 records with 69 features  
-    (69 columns and 52,441 rows) before cleaning & preparation.
-* Each row represents a Single Family Property record with a Tax Asessment date within 2017.
-* Each column represents a feature provided by Zillow or an informational element about the Property.
+* We scraped our data from github.com using Beautiful Soup.
+* we grabbed the link of space themed repos where the main coding language was either Python, C#, Java or Javasript on the first 100 pages of github.
+* Each row represents a readme file from a different project repository.
+* Each column represents a feature created to try and predict the primary coding languge used.
 
 
 # Prepare
 
 **Prepare Actions:**
 
-* **Whitespace:** Removed 52,441 Whitespace characters.
-* **REFORMAT:** Reformatted 13 columns containing 596,382 NaN entries to 0.
-* **CONVERT dtypes:** Convert dtypes to accurately reflect data contained within Feature.
-* **FEATURE ENGINEER:** Use Yearbuilt to create Age Feature, Drop yearbuilt for redundancy; create Feature to show ratio of Bathrooms to Bedrooms.
-* **fips CONVERSION:** Use fips master list to convert fips to county and state, Drop state for redundancy.
-* **PIVOT:** Pivot the resulting county column from fips conversion to 3 catagorical features. 
-* **DROP:** Dropped 27 Columns unecessary to data prediction (ie.. index and redundant features).
-* **REPLACE:** Replaced conditional values in 2 columns to transform into categorical features.
+* **NULLS:** There were no null values all repositories contained a readme for us to reference
+* **FEATURE ENGINEER:** Use exploration with bag of words to create new  categorical features from polarizing words.    create columns with 'clean' text ,'lemmatized' text , and columns containing the lengths of them as well. We also created a column that we filled with the sentiment score of the text in the readme. 
+* **DROP:** All Data acquired was used.
 * **RENAME:** Columns for Human readability.    
-* **REORDER:** Rearange order of columns for human readability.   
-* **DROP 2:** Drop Location Reference Columns unsuitable for use with ML without categorical translation.
-* **CACHE:** Write cleaned DataFrame into a new csv file ('zillow_2017_cleaned.csv').  
+* **REORDER:** Rearange order of columns for convenient manipulation.   
+* **DROP 2:** Drop Location Reference Columns unsuitable for use with ML without categorical translation. 
 * **ENCODED:** No encoding required.
 * **MELT:** No melts needed.
 
 
 # Summary of Data Cleansing
-* Cleaning the data resulted in less than 10% overall record loss
-
-* DROP NaN COLUMNS: 39 features each containing over 30% NaN were dropped; resulting in no record loss.
-*    DROP NaN ROWS: 1,768 records containing NaN across 13 features were dropped; resulting in only 3% record loss.
-*         OUTLIERS: Aproximately 3,000 outliers were filtered out in an attempt to more accurately align with realistic
-                    expectations of a Single Family Residence; resulting in less than a 6% decrease in overall records.
-*           IMPUTE: No data was imputed
+* Luckily all of our data was usable so we had 0 nulls or drops.
 
 * logerror: The original logerreror prediction data was pulled over and prepared with this DataFrame for later comparison in order to meet the requirement of improving the original model.  
     
@@ -140,16 +126,15 @@ Our initial thoughts were that since we centered our GitHub repositories around 
 # Split
 
 * **SPLIT:** train, validate and test (approx. 50/30/20), stratifying on target of 'language'
-* **SCALED:** no scaling was conducted
-* **Xy SPLIT:** split each DataFrame (train, validate, test) into X (selected features) and y (target) 
+* **SCALED:** We scaled all numeric columns. ['lem_length','original_length','clean_length','length_diff']
+* **Xy SPLIT:** split each DataFrame (train, validate, test) into X (features) and y (target) 
 
 
 ## A Summary of the data
 
-### There are 28,561 records (rows) in our training data consisting of 18 features (columns).
-* There are 7 categorical features made up of only 2 unique vales indicating True/False.
-* There are 5 categorical features made up of multiple numeric count values.
-* There are 6 continuous features that represent measurements of value, size, time, or ratio.
+### There are 432 records (rows) in our training data consisting of 1621 features (columns).
+* There are 1618 categorical features
+* There are 4 continuous features that represent measurements of value, size, time, or ratio.
 
 
 # Explore
@@ -192,21 +177,16 @@ Our initial thoughts were that since we centered our GitHub repositories around 
 * Tech Support
 
 ## Modeling Summary:
-* All models did slightly better than baseline.
+* We created several models that try and use our features to predict the primary coding language used in the repository
 * None of the models were within acceptable proximity to actual target results
-
-* Our top model ```Simple Linear Regression Model```  was run on test data and performed better than baseline as expected and even outperformed its previous score on validation by approximately three base points.
-
+*
+- insert later -
+*
 **For this itteration of modeling we have a model that beats baseline.**    
 
 ## Comparing Models
 
-* None of the models are anywhere close to being in danger of overfit
-* Both of the polynomial models performed at the top
-* The Lasso Lars model was not that far behind the polynomials
-* Simple LM was a little farther behind but still fairly close
-* Baselin and GLM were nearly identical and both performed with a significantly higher rate of error
-* logerror did not even beat baseline
+- insert later - 
     
 ## ```2nd Degree Polynomial``` is the best model and will likely continue to perform well above Baseline and logerror on the Test data.
 
@@ -219,9 +199,9 @@ Our initial thoughts were that since we centered our GitHub repositories around 
     * In general year over year the life expectancy rate seems to maintain an upward trend
     * Women have a higher life expectany than men
 * **Modeling:**
-    * We trained and evaluated 6 different Linear Regression Models, all of which outperformed baseline 
-    * We chose the Simple Linear Regression Model as our best performing model
-    * When evaluated on Test, it continued to outperform baseline and surpased its previous performance on validate
+    * 
+    - insert later -
+    *
 * **Recommendations:**
     * I think we should hold off on deploying this model.
     * Even though it beat baseline, it came nowhere near actual.
