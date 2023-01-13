@@ -4,11 +4,11 @@ This is the Mirzakhani Group-1 Repository for the GitHub Scraping NLP Project
 
 ## Group 1
 |Team Member |[LinkedIn](https://www.linkedin.com/school/codeup/) |[GitHub](https://github.com/Codeup-Mirzakhani-Group1-NLP-Project/Codeup-Mirzakhani-GitHub-Scrape-NLP-Project)|
-|:-------------------|:---------------------------------------------|:--------------------------------------|
-|Justin Evans        |linkedin.com/in/qmcbt                         |https://github.com/QMCBT-JustinEvans   |
-|Nadia Paz           |linkedin.com/in/nadiapaz                      |https://github.com/nadia-paz           |
-|Allante Staten      |linkedin.com/in/allantestaten                 |https://github.com/allantestaten       |
-|Zachary Stufflebeme |linkedin.com/in/zachary-stufflebeme-63379a243 |https://github.com/Zachary-Stufflebeme |
+|:-------------------|:---------------------------------------------------------|:--------------------------------------|
+|Justin Evans        |https://www.linkedin.com/in/qmcbt                         |https://github.com/QMCBT-JustinEvans   |
+|Nadia Paz           |https://www.linkedin.com/in/nadiapaz                      |https://github.com/nadia-paz           |
+|Allante Staten      |https://www.linkedin.com/in/allantestaten                 |https://github.com/allantestaten       |
+|Zachary Stufflebeme |https://www.linkedin.com/in/zachary-stufflebeme-63379a243 |https://github.com/Zachary-Stufflebeme |
 
 # Project Overview:
 What is driving the errors in the Zestimates?
