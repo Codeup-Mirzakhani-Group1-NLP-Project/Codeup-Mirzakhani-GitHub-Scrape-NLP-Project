@@ -276,9 +276,18 @@ def run_best_model():
                           index=['Model name', 'Train score', 'Validate score', 'Test score'])
 #####################################################
 
-
-
-
+def predict_text(text:str):
+    '''
+    Creates a data Frame out of the text, prepares this data for predictions, predicts outcome
+    Parameters:
+        text: string with a text from README file
+    Returns:
+        str: predictions: JavaScript, Java, C# or Python
+    '''
+    to_predict = pr.vectorize_for_predictions(pr.get_additional_stopwords(), text=text)
+    rf = RandomForestClassifier(max_depth=5, min_samples_leaf=2, random_state=seed)
+    rf.fit(X_train, y_train)
+    return rf.predict(to_predict)
 
 
 
