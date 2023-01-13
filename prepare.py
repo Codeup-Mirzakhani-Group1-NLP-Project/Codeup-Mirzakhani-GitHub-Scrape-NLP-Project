@@ -1,27 +1,38 @@
+# analyzing libraries
 import pandas as pd
 import numpy as np
 import unicodedata
+# text libraries
 import re
 import nltk
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import MinMaxScaler
-from nltk.corpus import stopwords
 from bs4 import BeautifulSoup
 import nltk.sentiment
+from nltk.corpus import stopwords
+# modeling preprocessing libraries
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import MinMaxScaler
+from sklearn.feature_extraction.text import TfidfVectorizer
 
+# helper module
+import acquire
 
+# ignore warnings from BeautifulSoup
 import warnings
 warnings.filterwarnings('ignore')
 
-import acquire
 
 ############################################
-# This is helper file that prepares text for the NLP
+# This is a helper file that prepares text for the NLP
 ############################################
 
 ###### Global variables ####################
 seed = 42
 target = 'language'
+############################################
+
+########### FUNCTIONS ######################
+
+####### TEXT PREPROCESSING
 
 def clean_html_markdown(string: str) -> str:
     '''
@@ -248,7 +259,7 @@ def scale_numeric_data(X_train, X_validate, X_test):
     
     return X_train, X_validate, X_test
 
-
+####### SPLITTING FUNCTIONS
 def split_3(df):
     '''
     This function takes in a dataframe and splits it into 3 data sets
@@ -280,7 +291,99 @@ def split_data(df, explore=True):
     else:
         train, validate, test = split_3(df)
         train, validate, test = scale_numeric_data(train, validate, test)
-        return train.iloc[:, :-1], validate.iloc[:, :-1], test.iloc[:, :-1], \
+        return train.iloc[:, 3:-1], validate.iloc[:, 3:-1], test.iloc[:, 3:-1], \
             train[target], validate[target], test[target]
 
+############ PREPARE DATA FOR MODELING ############
 
+def get_additional_stopwords(ser: pd.Series) -> list:
+    '''
+    Vectorizes the Series, calculates IDF, creates a list of values where idf score is bigger than 5.65.
+    This list can be used as stopwords for creating Bag of Words
+    Parameters:
+        ser: pandas series or data frame column that contains text
+    Returns:
+        list of strings -> stopwords
+    '''
+    tv = TfidfVectorizer()
+    tv.fit(ser)
+    idf_values = pd.Series(
+        dict(
+            zip(
+                tv.get_feature_names_out(), tv.idf_)))
+    # get the list of stop words
+    # 5.65 -> sweet spot
+    return idf_values[idf_values > 5.65].index.tolist()
+
+def vectorize(train_ser: pd.Series, validate_ser: pd.Series, test_ser: pd.Series, stopwords: list[str]):
+    '''
+    Applies TfidfVectorizer to text column from train, validate and test data sets.
+    Creates Bag of Words
+    
+    Parameters:
+        train_ser: train[column to vectorize]
+        validate_ser: validate[column to vectorize]
+        test_ser: test[column to vectorize]
+        stopwords: list of stopwords that should not be included in the bag of words
+    Returns:
+        3 data frames train/validate/test with bag of words 
+    '''
+    # create a vectorizer with stop words
+    tv = TfidfVectorizer(stop_words=stopwords)
+    # fit transform train 
+    train_tv = tv.fit_transform(train_ser)
+    # transform validate
+    validate_tv = tv.transform(validate_ser)
+    # transform test
+    test_tv = tv.transform(test_ser)
+    
+    # create Bag of Words data frames
+    # for column names extract features
+    # for index us series indexes
+    XF_train = pd.DataFrame(train_tv.todense(),
+                            columns=tv.get_feature_names_out(),
+                           index = train_ser.index)
+    XF_validate = pd.DataFrame(validate_tv.todense(), 
+                               columns=tv.get_feature_names_out(),
+                              index=validate_ser.index)
+    XF_test = pd.DataFrame(test_tv.todense(), 
+                           columns=tv.get_feature_names_out(),
+                          index=test_ser.index)
+    
+    
+    return XF_train, XF_validate, XF_test
+
+def get_modeling_data():
+    '''
+    Calls functions to:
+    - get the data frame with the clean text
+    - split data
+    - get additional stopwords
+    - vectorize data
+    Concatentes vectorized (bag of words) and numerical columns.
+    Returns:
+    X_train, X_validate< X_test: data sets for modeling
+    y_train, y_validate, y_tes: target variables
+    '''
+    df = get_clean_df()
+    # get splitted data sets and target variables
+    X_train, X_validate, X_test, y_train, y_validate, y_test = split_data(df, explore=False)
+    # create series from lemmatized text column
+    train_ser = X_train.lemmatized
+    validate_ser = X_validate.lemmatized
+    test_ser = X_test.lemmatized
+    # separate numerical columns
+    train_num = X_train.drop('lemmatized', axis = 1)
+    validate_num = X_validate.drop('lemmatized', axis = 1)
+    test_num = X_test.drop('lemmatized', axis = 1)
+    # create bag of words using vectorize function
+    XF_train, XF_validate, XF_test = vectorize(train_ser, 
+                                               validate_ser, 
+                                               test_ser, 
+                                               get_additional_stopwords(train_ser))
+    # concatenate bag of words and numerical values 
+    X_train_complete = pd.concat([XF_train, train_num], axis=1)                            
+    X_validate_complete = pd.concat([XF_validate, validate_num], axis=1)                             
+    X_test_complete = pd.concat([XF_test, test_num], axis=1)
+    
+    return X_train_complete, X_validate_complete, X_test_complete, y_train, y_validate, y_test
