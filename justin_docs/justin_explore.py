@@ -15,6 +15,7 @@ import json
 import nltk
 import requests
 import pandas as pd
+import scipy.stats as stats
 from bs4 import BeautifulSoup
 from typing import Dict, List, Optional, Union, cast
 
@@ -59,9 +60,9 @@ target = 'language'
 
 
 
-##########################
-##### Justin_Explore #####
-##########################
+#########################
+##### Justin_GLOBAL #####
+#########################
 
 # split languages into seperate DataFrames
 js_lang = train[train[target] == 'JavaScript']
@@ -126,4 +127,81 @@ py_sentiment = train[train[target] == 'Python'].sentiment
 # All
 all_lem_length = train.lem_length
 all_sentiment = train.sentiment
+
+
+
+#########################
+##### Justin_GLOBAL #####
+#########################
+
+def qmcbt_viz_01():
+
+    # sort by one language
+    return lem_word_counts.sort_values(['JavaScript'], ascending=False)[1:2]
+    
+def qmcbt_viz_02():
+    # show highest over 'All' word count campared by language
+    plt.rc('font', size=18)
+    lem_word_counts.sort_values('JavaScript', 
+                                ascending=False)[['JavaScript',
+                                                'C#',
+                                                'Java', 
+                                                'Python']][1:2].plot.barh()
+    plt.legend(bbox_to_anchor=(1.02, 1), loc='upper left', borderaxespad=0)
+    return plt.show()
+
+def qmcbt_viz_03():
+    # sort by one language
+    return lem_word_counts.sort_values(['Java'], ascending=False).head(1)
+
+def qmcbt_viz_04():
+    # show highest over 'All' word count campared by language
+    plt.rc('font', size=18)
+    lem_word_counts.sort_values('Java', 
+                                ascending=False)[['JavaScript',
+                                                'C#',
+                                                'Java', 
+                                                'Python']][0:1].plot.barh()
+    plt.legend(bbox_to_anchor=(1.02, 1), loc='upper left', borderaxespad=0)
+    return plt.show()
+
+def qmcbt_viz_05():
+    # Display top Bi-Gram pair for JavaScript lemmatized
+    pd.Series(js_2_gram).value_counts().head(5).plot.barh()
+    plt.title('JavaScript Bi-Grams')
+    return plt.show()
+
+def qmcbt_viz_06():
+    # is the distribution for sentiment different for any of the languages
+
+    # setting basic style parameters for matplotlib
+    plt.figsize=(13, 7)
+    plt.style.use('seaborn-darkgrid')
+
+    # KDE Plot
+    sns.kdeplot(js_sentiment, label = 'JavaScript')
+    sns.kdeplot(cs_sentiment, label = 'C#')
+    sns.kdeplot(jv_sentiment, label = 'Java')
+    sns.kdeplot(py_sentiment, label = 'Python')
+    plt.legend(['JavaScript', 'C#', 'Java', 'Python'])
+    plt.legend(bbox_to_anchor=(1.02, 1), loc='upper left', borderaxespad=0)
+    return plt.show()
+
+def qmcbt_stat_01():
+    #import scipy.stats as stats
+    
+    # Set alpha
+    alpha = α = 0.05
+
+    # stats f_oneway functions takes the groups as input and returns ANOVA F and p value
+    f_val, p_val = stats.f_oneway(js_sentiment, cs_sentiment, jv_sentiment, py_sentiment)
+
+    print(f'f_val: {f_val}')
+    print(f'p_val: {p_val}')
+    print('------------------------------')
+
+    if p_val < α:
+        print('Reject the null hypothesis')
+    else:
+        print('Fail to reject the null hypothesis')
 
