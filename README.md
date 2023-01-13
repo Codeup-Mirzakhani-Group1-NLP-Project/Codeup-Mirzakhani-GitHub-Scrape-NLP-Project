@@ -1,9 +1,8 @@
-# <b><i><font size="20">Final Report Team Zillow Project</font></i></b>
-## Codeup-Mirzakhani-GitHub-Scrape-NLP-Project
-This is the Mirzakhani Group-1 Repository for the GitHub Scraping NLP Project
+# <b><i><font size="20">What Language Is That?!</font></i></b>
+#### [Codeup-Mirzakhani-GitHub-Scrape-NLP-Project](https://github.com/Codeup-Mirzakhani-Group1-NLP-Project/Codeup-Mirzakhani-GitHub-Scrape-NLP-Project)
 
-## Group 1
-|Team Member |[LinkedIn](https://www.linkedin.com/school/codeup/) |[GitHub](https://github.com/Codeup-Mirzakhani-Group1-NLP-Project/Codeup-Mirzakhani-GitHub-Scrape-NLP-Project)|
+## Meet Group 1
+|Team Member         |[LinkedIn]                                                |[GitHub]                               |
 |:-------------------|:---------------------------------------------------------|:--------------------------------------|
 |Justin Evans        |https://www.linkedin.com/in/qmcbt                         |https://github.com/QMCBT-JustinEvans   |
 |Nadia Paz           |https://www.linkedin.com/in/nadiapaz                      |https://github.com/nadia-paz           |
