@@ -219,7 +219,7 @@ def csharp_bigrams_lem(cs_lem):
 def csharp_bigrams_clean(cs_lem):
     '''this function will create bar chart that will display top 10 bi grams'''
     # creates c sharp 10 most frequent bigrams 
-    top_10_csharp_clean_bigrams = (pd.Series(nltk.ngrams(cs_lem, 2)).value_counts().head(10))
+    top_10_csharp_clean_bigrams = (pd.Series(nltk.ngrams(cs_clean, 2)).value_counts().head(10))
     # sorts bi grams and provides bar gram and color of bars
     top_10_csharp_clean_bigrams.sort_values(ascending=True).plot.barh(color='blue', width=.9, figsize=(10, 6))
     plt.title('10 Most frequently occuring c# bigrams (Cleaned)')
@@ -237,7 +237,7 @@ def python_bigram_lem(py_lem):
     top_10_python_lem_bigrams = (pd.Series(nltk.ngrams(py_lem, 2)).value_counts().head(10))
     # sorts bi grams and provides bar gram and color of bars
     top_10_python_lem_bigrams.sort_values(ascending=True).plot.barh(color='brown', width=.9, figsize=(10, 6))
-    plt.title('10 Most frequently occuring c# bigrams (Lemmatized)')
+    plt.title('10 Most frequently occuring python bigrams (Lemmatized)')
     plt.ylabel('Bigram')
     plt.xlabel('# Occurances')
 
@@ -253,7 +253,7 @@ def python_bigrams_clean(py_clean):
     top_10_python_clean_bigrams = (pd.Series(nltk.ngrams(py_clean, 2)).value_counts().head(10))
     # sorts bi grams and provides bar gram and color of bars
     top_10_python_clean_bigrams.sort_values(ascending=True).plot.barh(color='black', width=.9, figsize=(10, 6))
-    plt.title('10 Most frequently occuring c# bigrams (Cleaned)')
+    plt.title('10 Most frequently occuring python bigrams (Cleaned)')
     plt.ylabel('Bigram')
     plt.xlabel('# Occurances')
     # plotting tick marks and resetting index
