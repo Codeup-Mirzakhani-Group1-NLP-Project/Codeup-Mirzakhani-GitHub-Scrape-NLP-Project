@@ -33,23 +33,23 @@ with well-labeled visualizations
     * model.py
     
 # Initial Thoughts
-Our initial thoughts are that outliers, age, and location are drivers of errors in Zestimate.
+Our initial thoughts were that since we centered our GitHub repositories around the topic of Space, that possibly unique scientific terms found within the readme files would be deterministic of the primary coding language used to conduct exploration and modeling of those projects. Another thought was that the readme files would be peppered with code specific terminology that would reveal the primary language used to code the projects.
 
 # The Plan
-* Acquire data from Codeup database
-* Prepare data
-* Explore data in search of drivers of logerror
+* Acquire data from GitHub Readme files by scraping the Github API
+* Clean and Prepare the data using RegEx
+* Explore data in search of relevant keyword grouping using bi-grams and n-grams 
 * Answer the following initial question:
 
-    * **Question 1.** Do Longitude and Lattitude have a relationship with eachother and our target feature of Zillow Zestimate logerror? 
+    * **Question 1.** INSERT_QUESTION_HERE? 
 
-    * **Question 2.** Is there a relationship between our loc_clusters feature, and each of the five independent clusters 0-4 as binary categorical features, with logerror? 
+    * **Question 2.** INSERT_QUESTION_HERE?
 
-    * **Question 3.** Is there a relationship between log_error and tax delinquency? 
+    * **Question 3.** INSERT_QUESTION_HERE? 
 
-    * **Question 4.** Do homes that are younger than 81 years have more log error?
+    * **Question 4.** INSERT_QUESTION_HERE?
 
-    * **Question 5.** Do the clusters have a relationship with logerror and squarefeet of the home?
+    * **Question 5.** INSERT_QUESTION_HERE?
 
 * Develop a Model to predict error in zestimate.
     * Use drivers identified in explore to build predictive models of error using...
