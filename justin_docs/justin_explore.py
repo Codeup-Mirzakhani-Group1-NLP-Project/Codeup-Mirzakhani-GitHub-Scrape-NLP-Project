@@ -50,9 +50,9 @@ import modeling as m
 
 
 
-#################################
-##### Train, Validate, Test #####
-#################################
+#############################
+##### Acquire & Prepare #####
+#############################
 
 df = pr.get_clean_df()
 train, validate, test = pr.split_data(df, explore=True)
