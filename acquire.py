@@ -11,10 +11,9 @@ To create the `data.json` file that contains the data.
 """
 import os
 import json
-from typing import Dict, List, Optional, Union, cast
+from typing import Dict, List, Union, cast
 import requests
 from bs4 import BeautifulSoup
-import pandas as pd
 from time import sleep
 
 from env import github_token, github_username
