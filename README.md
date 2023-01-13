@@ -51,11 +51,12 @@ Our initial thoughts were that since we centered our GitHub repositories around 
 
     * **Question 5.** INSERT_QUESTION_HERE?
 
-* Develop a Model to predict error in zestimate.
+* Develop a Model to predict program language based on inut from GitHub Project Readme files.
     * Use drivers identified in explore to build predictive models of error using...
     * Evaluate models on train and validate data using RMSE (Root mean square Error)
     * Select the best model based on the least RMSE
     * Evaluate the best model on test data
+* Run Custom Function on a single random Data input from GitHub Readme file to predict program language of that project.
 * Draw conclusions
 
 
@@ -130,7 +131,7 @@ Our initial thoughts were that since we centered our GitHub repositories around 
 
 # Split
 
-* **SPLIT:** train, validate and test (approx. 60/20/20), stratifying on target of 'churn'
+* **SPLIT:** train, validate and test (approx. 50/30/20), stratifying on target of 'language'
 * **SCALED:** no scaling was conducted
 * **Xy SPLIT:** split each DataFrame (train, validate, test) into X (selected features) and y (target) 
 
