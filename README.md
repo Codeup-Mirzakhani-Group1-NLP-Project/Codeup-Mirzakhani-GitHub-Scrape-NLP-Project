@@ -1,5 +1,6 @@
 # <b><i><font size="20">What Language Is That?!</font></i></b>
-#### [Codeup-Mirzakhani-GitHub-Scrape-NLP-Project](https://github.com/Codeup-Mirzakhani-Group1-NLP-Project/Codeup-Mirzakhani-GitHub-Scrape-NLP-Project)
+#### [Click this link to visit our Project Github](https://github.com/Codeup-Mirzakhani-Group1-NLP-Project/Codeup-Mirzakhani-GitHub-Scrape-NLP-Project)
+#### [Click this link to see our Google Slide Presentation](https://www.canva.com/design/DAFXYtmJecw/zcgBWNIuZw722jgt14ferg/edit)
 
 ## Meet Group 1
 |Team Member         |[LinkedIn]                                                |[GitHub]                               |
@@ -10,14 +11,18 @@
 |Zachary Stufflebeme |https://www.linkedin.com/in/zachary-stufflebeme-63379a243 |https://github.com/Zachary-Stufflebeme |
 
 # Project Overview:
-What is driving the errors in the Zestimates?
+This team was tasked to build a model that can predict the main programming language of a repository using data from the GitHub repository README files.
 
-This team has been tasked to collect, clean and alayze Zillow data from 2017 in order to improve a previous prediction model that was designed to predict the Home Sale Value for Single Family Properties based on available realestate data.
+Using Natural Language Processing and following the full Data Science Pipeline 
 
-# Project Goal:
-* Use clusters to assist in our exploration, understanding, and modeling of the Zillow data, with a target variable of logerror for this regression project.
-* Discover key attributes that drive error in Zestimate logerror.
-* Use those attributes to develop a machine learning model to predict impact on logerror.
+
+# Project Goals:
+* Produce a Final GitHub repository containing our work
+* Provide a well-documented jupyter notebook that contains our analysis
+* Display a README file that contains a description of our project and instructions on how to run it with a link to our Google Slide Presentation
+* Present a google slide deck suitable for a general audience which summarizes our findings in exploration and documents the results of your modeling
+with well-labeled visualizations
+* Produce and demonstrate a Function that will take in the text of a README file, and attempt to predict the programming language using our best model.
 
 # Reproduction of this Data:
 * Can be accomplished using a local env.py containing user, password, host information for access to the Codeup SQL database server.
