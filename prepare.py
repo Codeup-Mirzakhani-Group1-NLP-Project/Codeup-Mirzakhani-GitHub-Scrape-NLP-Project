@@ -219,14 +219,7 @@ def get_clean_df(predictions:bool=False, text:str='') -> pd.DataFrame:
     df['clean_length'] = df.clean.str.len()
     df['length_diff'] = df.original_length - df.clean_length
     # categorical
-    df['has_#9'] = np.where(df.clean.str.contains('&#9;'), 1, 0)
-    df['has_parts'] = np.where((df.clean.str.contains(' part ')) | (df.clean.str.contains('parts')), 1, 0)
-    df['has_fix'] = np.where(df.clean.str.contains(' fix '), 1, 0)
-    df['has_tab'] = np.where(df.clean.str.contains(' tab '), 1, 0)
-    df['has_x'] = np.where(df.clean.str.contains(' x '), 1, 0)
-    df['has_v'] = np.where(df.clean.str.contains(' v '), 1, 0)
-    df['has_codeblock'] = np.where(df.clean.str.contains('codeblock'), 1, 0)
-    df['has_image'] = np.where(df.clean.str.contains('image'), 1, 0)
+
     # change language to category
     df.language = pd.Categorical(df.language)
     # drop repo column
@@ -234,10 +227,8 @@ def get_clean_df(predictions:bool=False, text:str='') -> pd.DataFrame:
     # drop 'clean_length' columns, as it is part of length_diff column
     df.drop('clean_length', axis=1, inplace=True)
     # reorder columns
-    new_order = ['original', 'first_clean', 'clean', 'lemmatized', 'sentiment', 'lem_length',
-        'original_length', 'length_diff', 'has_#9', 'has_tab',\
-        'has_parts', 'has_fix', 'has_x', 'has_v',\
-       'has_codeblock', 'has_image', 'language']
+    new_order = ['original', 'first_clean', 'clean', 'lemmatized', 'sentiment', 'lem_length',\
+        'original_length', 'length_diff', 'language']
     df = df[new_order]
     return df
 
@@ -272,10 +263,10 @@ def split_3(df, explore=True):
     original dataset, and train is .70*.80= 56% of the original dataset. 
     The function returns, in this order, train, validate and test dataframes. 
     '''
-    if explore:
-        explore_columns = ['original', 'first_clean', 'clean', 'lemmatized', 'sentiment', 'lem_length',\
+    
+    explore_columns = ['original', 'first_clean', 'clean', 'lemmatized', 'sentiment', 'lem_length',\
             'original_length', 'length_diff', 'language']
-        df = df[explore_columns]
+    df = df[explore_columns]
     #split_db class verision with random seed
     train_validate, test = train_test_split(df, test_size=0.2, 
                                             random_state=seed, stratify=df[target])
@@ -402,7 +393,7 @@ def vectorize_for_predictions(stopwords: list[str], text='', train_ser : pd.Seri
     
     return pd.concat([XF, df], axis=1)
 
-def get_modeling_data(predictions:bool=False, text:str=''):
+def get_modeling_data():
     '''
     Calls functions to:
     - get the data frame with the clean text
@@ -414,28 +405,27 @@ def get_modeling_data(predictions:bool=False, text:str=''):
     X_train, X_validate< X_test: data sets for modeling
     y_train, y_validate, y_tes: target variables
     '''
-    if predictions:
-        df = get_clean_df(predictions=True, text=text)
-    else:
-        df = get_clean_df()
-        # get splitted data sets and target variables
-        X_train, X_validate, X_test, y_train, y_validate, y_test = split_data(df, explore=False)
-        # create series from lemmatized text column
-        train_ser = X_train.lemmatized
-        validate_ser = X_validate.lemmatized
-        test_ser = X_test.lemmatized
-        # separate numerical columns
-        train_num = X_train.drop('lemmatized', axis = 1)
-        validate_num = X_validate.drop('lemmatized', axis = 1)
-        test_num = X_test.drop('lemmatized', axis = 1)
-        # create bag of words using vectorize function
-        XF_train, XF_validate, XF_test = vectorize(train_ser, 
-                                                validate_ser, 
-                                                test_ser, 
-                                                get_additional_stopwords(train_ser))
-        # concatenate bag of words and numerical values 
-        X_train_complete = pd.concat([XF_train, train_num], axis=1)                            
-        X_validate_complete = pd.concat([XF_validate, validate_num], axis=1)                             
-        X_test_complete = pd.concat([XF_test, test_num], axis=1)
-        
-        return X_train_complete, X_validate_complete, X_test_complete, y_train, y_validate, y_test
+
+
+    df = get_clean_df()
+    # get splitted data sets and target variables
+    X_train, X_validate, X_test, y_train, y_validate, y_test = split_data(df, explore=False)
+    # create series from lemmatized text column
+    train_ser = X_train.lemmatized
+    validate_ser = X_validate.lemmatized
+    test_ser = X_test.lemmatized
+    # separate numerical columns
+    train_num = X_train.drop('lemmatized', axis = 1)
+    validate_num = X_validate.drop('lemmatized', axis = 1)
+    test_num = X_test.drop('lemmatized', axis = 1)
+    # create bag of words using vectorize function
+    XF_train, XF_validate, XF_test = vectorize(train_ser, 
+                                            validate_ser, 
+                                            test_ser, 
+                                            get_additional_stopwords(train_ser))
+    # concatenate bag of words and numerical values 
+    X_train_complete = pd.concat([XF_train, train_num], axis=1)                            
+    X_validate_complete = pd.concat([XF_validate, validate_num], axis=1)                             
+    X_test_complete = pd.concat([XF_test, test_num], axis=1)
+    
+    return X_train_complete, X_validate_complete, X_test_complete, y_train, y_validate, y_test
