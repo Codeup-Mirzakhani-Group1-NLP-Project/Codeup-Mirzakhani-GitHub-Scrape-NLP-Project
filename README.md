@@ -25,12 +25,20 @@ with well-labeled visualizations
 * Produce and demonstrate a Function that will take in the text of a README file, and attempt to predict the programming language using our best model.
 
 # Reproduction of this Data:
-* Can be accomplished using a local env.py containing user, password, host information for access to the Codeup SQL database server.
-* All other step by step instructions can be found by reading and running the below Jupyter Notebook file located in our Codeup-Justin-Evans-Yvette-Ibarra github repository found here: (https://github.com/Codeup-Justin-Evans-Yvette-Ibarra/project_zillow_team).
-    * Final_Report_Zillow_Team_Project.ipynb
-    * wrangle.py
-    * explore.py
-    * model.py
+* Can be accomplished using a local env.py containing github_username, github_token, and host Repository link information for access to the GitHub project Readme file search results that you want to explore.
+   * TODO: Make a github personal access token.
+      * 1. Go here and generate a personal access token: https://github.com/settings/tokens
+        You do _not_ need select any scopes, i.e. leave all the checkboxes unchecked
+      * 2. Save it in your env.py file under the variable `github_token`
+        TODO: Add your github username to your env.py file under the variable `github_username`
+        TODO: Add more repositories to the `REPOS` list below.
+* All other step by step instructions can be found by reading and running the below Jupyter Notebook file located in our Codeup-Mirzakhani-GitHub-Scrape-NLP-Project github repository found here:
+   * https://github.com/Codeup-Mirzakhani-Group1-NLP-Project/Codeup-Mirzakhani-GitHub-Scrape-NLP-Project
+   * Final_Report_NLP-Project.ipynb
+   * acquire.py
+   * prepare.py
+   * explore.py
+   * model.py
     
 # Initial Thoughts
 Our initial thoughts were that since we centered our GitHub repositories around the topic of Space, that possibly unique scientific terms found within the readme files would be deterministic of the primary coding language used to conduct exploration and modeling of those projects. Another thought was that the readme files would be peppered with code specific terminology that would reveal the primary language used to code the projects.
