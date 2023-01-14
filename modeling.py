@@ -18,10 +18,10 @@ import prepare as pr
 seed = 42
 # DataFrame to store the scores
 scores = pd.DataFrame(columns=['model_name', 'train_score', 'validate_score', 'score_difference'])
-# calculate a baseline
-baseline = round(y_train.value_counts(normalize=True)[0], 2)
 # create sets and taget variables for modeling
 X_train, X_validate, X_test, y_train, y_validate, y_test = pr.get_modeling_data()
+# calculate a baseline
+baseline = round(y_train.value_counts(normalize=True)[0], 2)
 
 # some models don't accept text as a target
 # create a map to digitize target variable
