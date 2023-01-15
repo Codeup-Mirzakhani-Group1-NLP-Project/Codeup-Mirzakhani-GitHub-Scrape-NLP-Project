@@ -66,11 +66,11 @@ Our initial thoughts were that since we centered our `GitHub` repositories aroun
 
     * **Question 3.** What are the most used words in cleaned python strings?
 
-    * **Question 4.** Are there difference between the clean and lemmatized C# bi grams?
+    * **Question 4.** Are there differences between the clean and lemmatized C# bi grams?
 
     * **Question 5.** Are there differences between the clean and lemmatized python bi grams?
 
-    * **Question 6.** Is there an association between coding language and the lemmatized mean of string lengths across languages?
+    * **Question 6.** Is there an association between coding language and the lemmatized mean length of the string?
 
     * **Question 7.** Are there any specific words or word groups that can assist with identifying the Language JavaScript or Java over the other languages?
 
@@ -147,7 +147,9 @@ We acquired 432 entries.
 # Explore
 
 * In the exploration part we tried to identify if there are words, bigrams or trigrams that could help our model to identify the programming language. 
-* We ran statistical tests on the numerical features that we have creted.
+* We ran statistical tests on the numerical features that we have created.
+* Explore differences between cleaned and lemmatized versions of c# and python.
+* Explore association between coding language and the lemmatized mean of string lengths.
 
 ## Exploration Summary of Findings:
 * In the space thematic Javascript is the most popular language. It makes up 35% of the data sample.
@@ -203,9 +205,11 @@ To evaluate the models we used the accuracy score. The good outcome is the one w
 
 # Conclusions: 
 ## **Exploration:**
- * WORDS
- * WORDS
- * WORDS
+* In the space thematic Javascript is the most popular language. It makes up 35% of the data sample.
+* Most popular "word" in **C#** is `&#9;`.
+* Most used in **Python** is `python`.
+* There is no significant difference in the length of the lemmatized text among the languages.
+
 ## **Modeling:**
  * We have created the model that showed 59% accuracy on the test set.
  * The results of the model performance are not consistant as the texts from the Readme files don't have a standard and programmers not always describe their work process step by step. That possibly could help our model to pick the outcome in better way.
@@ -214,5 +218,5 @@ To evaluate the models we used the accuracy score. The good outcome is the one w
  * WORDS
  * WORDS
 ## **Next Steps:**
- * WORDS
+ * Retrieve more data to train the model on and potentially identify better features for the model
  * WORDS
