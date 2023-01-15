@@ -91,27 +91,6 @@ py_lem_length = py_lang['lem str len']
 ##### Justin's Global Variables #####
 #####################################
 
-"""
-# split languages into seperate DataFrames
-js_lang = train[train[target] == 'JavaScript']
-cs_lang = train[train[target] == 'C#']
-jv_lang = train[train[target] == 'Java']
-py_lang = train[train[target] == 'Python']
-    
-# create word groups on lemmatized column 
-js_lem = (' '.join(js_lang[js_lang[target] == 'JavaScript']['lemmatized'])).split()
-cs_lem = (' '.join(cs_lang[cs_lang[target] == 'C#']['lemmatized'])).split()
-jv_lem = (' '.join(jv_lang[jv_lang[target] == 'Java']['lemmatized'])).split()
-py_lem = (' '.join(py_lang[py_lang[target] == 'Python']['lemmatized'])).split()
-all_lem = (' '.join(df['lemmatized'])).split()
-    
-# create word groups on clean column
-js_clean = (' '.join(js_lang[js_lang[target] == 'JavaScript']['clean'])).split()
-cs_clean = (' '.join(cs_lang[cs_lang[target] == 'C#']['clean'])).split()
-jv_clean = (' '.join(jv_lang[jv_lang[target] == 'Java']['clean'])).split()
-py_clean = (' '.join(py_lang[py_lang[target] == 'Python']['clean'])).split()
-all_clean = (' '.join(df['clean'])).split()
-"""    
 # Create frequency Series for lem
 js_lem_freq = pd.Series(js_lem).value_counts()
 cs_lem_freq = pd.Series(cs_lem).value_counts()
@@ -348,11 +327,16 @@ def kruskal_test(js_lem_length, jv_lem_length,cs_lem_length,py_lem_length):
 ######################################
 
 def qmcbt_viz_01():
-
+    """
+    This Function Displays a Visualization needed for the Final Presentation.
+    """
     # sort by one language
     return lem_word_counts.sort_values(['JavaScript'], ascending=False)[1:2]
     
 def qmcbt_viz_02():
+    """
+    This Function Displays a Visualization needed for the Final Presentation.
+    """
     # show highest over 'All' word count campared by language
     plt.rc('font', size=18)
     lem_word_counts.sort_values('JavaScript', 
@@ -364,10 +348,16 @@ def qmcbt_viz_02():
     return plt.show()
 
 def qmcbt_viz_03():
+    """
+    This Function Displays a Visualization needed for the Final Presentation.
+    """
     # sort by one language
     return lem_word_counts.sort_values(['Java'], ascending=False).head(1)
 
 def qmcbt_viz_04():
+    """
+    This Function Displays a Visualization needed for the Final Presentation.
+    """
     # show highest over 'All' word count campared by language
     plt.rc('font', size=18)
     lem_word_counts.sort_values('Java', 
@@ -379,6 +369,9 @@ def qmcbt_viz_04():
     return plt.show()
 
 def qmcbt_viz_05():
+    """
+    This Function Displays a Visualization needed for the Final Presentation.
+    """
     # Display top Bi-Gram pair for JavaScript lemmatized
     pd.Series(js_2_gram).value_counts().head(5).plot.barh()
     plt.title('JavaScript Bi-Grams')
@@ -386,6 +379,9 @@ def qmcbt_viz_05():
     return plt.show()
 
 def qmcbt_viz_06():
+    """
+    This Function Displays a Visualization needed for the Final Presentation.
+    """
     # is the distribution for sentiment different for any of the languages
 
     # setting basic style parameters for matplotlib
@@ -402,8 +398,18 @@ def qmcbt_viz_06():
     return plt.show()
 
 def qmcbt_stat_01():
-    #import scipy.stats as stats
+    """
+    Description:
+    This Function Displays the results of an ANOVA Statistical Test.
     
+    Required Imports:
+    import scipy.stats as stats
+    
+    Arguments:
+    NONE
+    
+    """
+        
     # Set alpha
     alpha = α = 0.05
 
