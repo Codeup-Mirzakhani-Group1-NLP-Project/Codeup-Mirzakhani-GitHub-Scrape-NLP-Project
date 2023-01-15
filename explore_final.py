@@ -250,6 +250,86 @@ def csharp_bigrams(cs_lem, cs_clean):
     #fig.tight_layout()
     plt.show()
 
+def csharp_java_bigrams(cs_clean, jv_clean):
+    '''
+    creates sublots to display side_by_side
+    c# and java bigrams
+    '''
+    # creates c sharp 10 most frequent bigrams 
+    top_10_java_bigrams = (pd.Series(nltk.ngrams(jv_clean, 2)).value_counts().head(10))
+    # sorts 
+    
+    # creates c sharp 10 most frequent bigrams 
+    top_10_csharp_bigrams = (pd.Series(nltk.ngrams(cs_clean, 2)).value_counts().head(10))
+ 
+    # plot bigrams
+    plt.figure(figsize=(24, 6))
+    plt.rc('font', size=14)
+    plt.suptitle('10 Most frequently occuring bigrams')
+
+    # 1st subplot C#
+    plt.subplot(121)
+    top_10_csharp_bigrams.sort_values(ascending=True).plot.barh(color='blue', width=.9)
+    plt.title('C#')
+    plt.xlabel('# Occurances')
+    # plotting tick marks and resetting index
+    ticks, _ = plt.yticks()
+    labels = top_10_csharp_bigrams.reset_index()['index'].apply(lambda t: t[0] + ' ' + t[1])
+    _ = plt.yticks(ticks, labels)
+
+    # 2nd subplot Java bigrams
+    plt.subplot(122)
+    top_10_java_bigrams.sort_values(ascending=True).plot.barh(color='green', width=.9)
+    plt.title('Java')
+    plt.xlabel('# Occurances')
+
+    # plotting tick marks and resetting index
+    ticks, _ = plt.yticks()
+    labels = top_10_java_bigrams.reset_index()['index'].apply(lambda t: t[0] + ' ' + t[1])
+    _ = plt.yticks(ticks, labels)
+
+    plt.show()
+
+def python_js_bigrams(py_clean, js_clean):
+    '''
+    creates sublots to display side_by_side
+    javascript and python bigrams
+    '''
+    # creates c sharp 10 most frequent bigrams 
+    top_10_js_bigrams = (pd.Series(nltk.ngrams(js_clean, 2)).value_counts().head(10))
+    # sorts 
+    
+    # creates c sharp 10 most frequent bigrams 
+    top_10_python_bigrams = (pd.Series(nltk.ngrams(py_clean, 2)).value_counts().head(10))
+    
+    # plot bigrams
+    plt.figure(figsize=(24, 6))
+    plt.rc('font', size=14)
+    plt.suptitle('10 Most frequently occuring bigrams')
+
+    # 1st subplot Javascript
+    plt.subplot(121)
+    top_10_js_bigrams.sort_values(ascending=True).plot.barh(color='indianred', width=.9)
+    plt.title('Javascript')
+    plt.xlabel('# Occurances')
+    # plotting tick marks and resetting index
+    ticks, _ = plt.yticks()
+    labels = top_10_js_bigrams.reset_index()['index'].apply(lambda t: t[0] + ' ' + t[1])
+    _ = plt.yticks(ticks, labels)
+
+    # 2nd subplot Python bigrams
+    plt.subplot(122)
+    top_10_python_bigrams.sort_values(ascending=True).plot.barh(color='darkviolet', width=.9)
+    plt.title('Python')
+    plt.xlabel('# Occurances')
+
+    # plotting tick marks and resetting index
+    ticks, _ = plt.yticks()
+    labels = top_10_python_bigrams.reset_index()['index'].apply(lambda t: t[0] + ' ' + t[1])
+    _ = plt.yticks(ticks, labels)
+
+    plt.show()
+
 def python_bigram_lem(py_lem):
     '''this function will create bar chart that will display top 10 bi grams'''
     # creates bi grams 
