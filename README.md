@@ -13,19 +13,20 @@
 # Project Overview:
 This team was tasked to build a model that can predict the main programming language of a repository using data from the GitHub repository README files.
 
-Using Natural Language Processing and following the full Data Science Pipeline 
+Using **Natural Language Processing** and following the full *Data Science Pipeline*
 
 
 # Project Goals:
 * Produce a Final GitHub repository containing our work
 * Provide a well-documented jupyter notebook that contains our analysis
-* Display a README file that contains a description of our project and instructions on how to run it with a link to our Google Slide Presentation
+* Display a `README` file that contains a description of our project and instructions on how to run it with a link to our Google Slide Presentation
 * Present a google slide deck suitable for a general audience which summarizes our findings in exploration and documents the results of our modeling
 with well-labeled visualizations
-* Produce and demonstrate a Function that will take in the text of a README file, and attempt to predict the programming language using our best model.
+* Produce and demonstrate a function that will take in the text of a `README` file, and attempt to predict the programming language using our best model.
 
 # Reproduction of this Data:
-* Can be accomplished using a local env.py containing github_username, github_token, and host Repository link information for access to the GitHub project Readme file search results that you want to explore.
+* Can be accomplished using a local `env.py` containing `github_username`, `github_token`, and host Repository link information for access to the GitHub project Readme file search results that you want to explore.
+**Warning** to make the scraping successfull we added pauses 20 sec/per page. This slows down the first run of the program. After the scraping all data is saved locally in the `data.json` file.
   * To retrieve a github personal access token:
     * 1. Go here and generate a personal access token: https://github.com/settings/tokens  
          You do _not_ need to select any scopes, i.e. leave all the checkboxes unchecked
@@ -33,20 +34,20 @@ with well-labeled visualizations
          Add your github username to your env.py file under the variable ```github_username```  
          
 * Clone the Repository using this code ```git clone git@github.com:Codeup-Mirzakhani-Group1-NLP-Project/Codeup-Mirzakhani-GitHub-Scrape-NLP-Project.git``` then run the ```Final_Report_NLP-Project.ipynb``` Jupyter Notebook. You will need to ensure the below listed files, at a minimum, are included in the repo in order to be able to run.
-   * Final_Report_NLP-Project.ipynb
-   * acquire.py
-   * prepare.py
-   * explore_final.py
-   * modeling.py
+   * `Final_Report_NLP-Project.ipynb`
+   * `acquire.py`
+   * `prepare.py`
+   * `explore_final.py`
+   * `modeling.py`
 
 * A step by step walk through of each piece of the Data Science pipeline can be found by reading and running the support files located in the individual team members folders on our ```Codeup-Mirzakhani-GitHub-Scrape-NLP-Project``` github repository found here: https://github.com/Codeup-Mirzakhani-Group1-NLP-Project/Codeup-Mirzakhani-GitHub-Scrape-NLP-Project
     
 # Initial Thoughts
-Our initial thoughts were that since we centered our GitHub repositories around the topic of Space, that possibly unique scientific terms found within the readme files would be deterministic of the primary coding language used to conduct exploration and modeling of those projects. Another thought was that the readme files would be peppered with code specific terminology that would reveal the primary language used to code the projects.
+Our initial thoughts were that since we centered our `GitHub` repositories around the topic of **Space**, that possibly unique scientific terms found within the readme files would be deterministic of the primary coding language used to conduct exploration and modeling of those projects. Another thought was that the readme files would be peppered with code specific terminology that would reveal the primary language used to code the projects.
 
 # The Plan
-* Acquire data from GitHub Readme files by scraping the Github API
-* Clean and Prepare the data using RegEx and beautiful soup.
+* Acquire data from `GitHub` `Readme` files by scraping the `Github API`
+* Clean and Prepare the data using `RegEx` and `Beautiful soup`.
 * Explore data in search of relevant keyword grouping using bi-grams and n-grams 
 * Answer the following initial question:
 
@@ -60,14 +61,12 @@ Our initial thoughts were that since we centered our GitHub repositories around 
 
     * **Question 5.** INSERT_QUESTION_HERE?
 
-* Develop a Model to predict program language of space related projects using either Python, Javascript, Java, or C# based on input from GitHub Project Readme files.
-    * Use drivers identified in explore to build predictive models of error using...
-    * Evaluate models on train and validate data using RMSE (Root mean square Error)
-    * Select the best model based on the least RMSE
+* Develop a Model to predict program language of space related projects using either `Python`, `Javascript`, `Java`, or `C#` based on input from `GitHub` Project `Readme` files.
+    * Evaluate models on train and validate data using accuracy score
+    * Select the best model based on the smallest difference in the accuracy score on the train and validate sets.
     * Evaluate the best model on test data
-* Run Custom Function on a single random Data input from GitHub Readme file to predict program language of that project.
+* Run Custom Function on a single random Data input from `GitHub` `Readme` file to predict program language of that project.
 * Draw conclusions
-
 
 # Data Dictionary:
 
@@ -75,39 +74,32 @@ Our initial thoughts were that since we centered our GitHub repositories around 
 ## Features
 |Feature    |Description       |
 |:----------|:-----------------|
-|original||	
-|first_clean||
-|clean||
-|lemmatized||
-|sentiment||
-|lem_length||
-|original_length||
-|length_diff||
-|has_#9||
-|has_tab||
-|has_parts||
-|has_fix||
-|has_x||
-|has_v||
-|has_codeblock||
-|has_image||
-|language||
+|`original`| The original data we pulled from the `GitHub`|	
+|`first_clean`| Text after cleaning the `html` and `markdown` code|
+|`clean`|Tokenized text in lower case, with latin symbols only|
+|`lemmatized`|Lemmatized text|
+|`sentiment`|The coumpound sentiment score of each observation|
+|`lem_length`|The length of the lemmatized text in symbols|
+|`original_length`|The length of the original text in symbols|
+|`length_diff`|The difference in length between the orignal_length and the length of the `clean` text|
+||**Target variable:**|
+|`language`|`JavaScript`, `C#`, `Java` or `Python` programming languages|
 
 
 # Acquire
 
-* We scraped our data from github.com using Beautiful Soup.
-* we grabbed the link of space themed repos where the main coding language was either Python, C#, Java or Javasript on the first 100 pages of github.
-* Each row represents a readme file from a different project repository.
+* We scraped our data from `github.com` using `Beautiful Soup`.
+* We grabbed the link of **space themed repos** where the main coding language was either `Python`, `C#`, `Java` or `Javasript` on the first 100 pages of `github`.
+* Each row represents a `Readme` file from a different project repository.
 * Each column represents a feature created to try and predict the primary coding languge used.
-
+We acquired 432 entries.
 
 # Prepare
 
 **Prepare Actions:**
 
 * **NULLS:** There were no null values all repositories contained a readme for us to reference
-* **FEATURE ENGINEER:** Use exploration with bag of words to create new  categorical features from polarizing words.    create columns with 'clean' text ,'lemmatized' text , and columns containing the lengths of them as well. We also created a column that we filled with the sentiment score of the text in the readme. 
+* **FEATURE ENGINEER:** Use exploration with bag of words to create new  categorical features from polarizing words. We created columns with `clean` text ,`lemmatized` text , and columns containing the lengths of them as well. We also created a column that we filled with the sentiment score of the text in the readme. 
 * **DROP:** All Data acquired was used.
 * **RENAME:** Columns for Human readability.    
 * **REORDER:** Rearange order of columns for convenient manipulation.   
@@ -118,15 +110,13 @@ Our initial thoughts were that since we centered our GitHub repositories around 
 
 # Summary of Data Cleansing
 * Luckily all of our data was usable so we had 0 nulls or drops.
-
-* logerror: The original logerreror prediction data was pulled over and prepared with this DataFrame for later comparison in order to meet the requirement of improving the original model.  
     
-* Note: Special care was taken to ensure that there was no leakage of this data.
+* Note: Special care was taken to ensure that there was no leakage of this data. All code parts were removed
 
 
 # Split
 
-* **SPLIT:** train, validate and test (approx. 50/30/20), stratifying on target of 'language'
+* **SPLIT:** train, validate and test (approx. 50/30/20), stratifying on target of `language`
 * **SCALED:** We scaled all numeric columns. ['lem_length','original_length','clean_length','length_diff']
 * **Xy SPLIT:** split each DataFrame (train, validate, test) into X (features) and y (target) 
 
@@ -140,73 +130,73 @@ Our initial thoughts were that since we centered our GitHub repositories around 
 
 # Explore
 
-* Exploration of the data was conducted using various Correlation Heat Maps, Plot Variable Pairs, Categorical Plots, and many other graph and chart displays to visualize Relationships between independent features and the target as well as their relationships to eachother. 
-
-    
-* Each of the three selected features were tested for a relationship with our target of Tax Assesed Value.
-    1. Bedrooms
-    2. Bathrooms
-    3. Property Squarefeet  
-    
-    
-* All three independent features showed a significant relationship with the target feature.
-
-* Three statistical tests were used to test these questions.
-    1. T-Test
-    2. Pearson's R
-    3. $Chi^2$
-
-# Takeaways and Conclusions
+* In the exploration part we tried to identify if there are words, bigrams or trigrams that could help our model to identify the programming language. 
+* We ran statistical tests on the numerical features that we have creted.
 
 ## Exploration Summary of Findings:
-* Gender seems to have an impact on life expectancy
-* Both Male and Female life expectancies raise over the years
-* In general year over year the life expectancy rate seems to maintain an upward trend
-* Women have a higher life expectany than men
+* In the space thematic Javascript is the most popular language. It makes up 35% of the data sample.
+* Most popular "word" in **C#** is `&#9;`.
+* The word `codeblock` appears only in **Python** repositories. 
+* Most used in **Python** is `python`.
+* The words that identifies **Java** most are `x` and `planet`.
+* Most appearing bigram in **Javascript** is "bug fixed".
+* There is no significant difference in the length of the lemmatized text among the languages.
+* There is no significant difference in the compound sentiment score among the languages.
+
+## Modeling
 
 ### Features that will be selected for Modeling:
-* Our target feature is Tax Assessed Property Value ```('taxvaluedollarcnt')```
-* Our selected features are:
-    1. Property Squarefeet ```('calculatedfinishedsquarefeet')```
-    2. Bathrooms ```('bathroomcny')```
-    3. Bedrooms ```('bedroomcnt')```
+* All continious variables:
+    - `sentiment`
+    - `lem_length`
+    - `original_length`
+    - `length_diff`
+* `lemmatized` text turned into the Bag of Words with `TDIFVectorizer`
 
-### Features I'm not moving to modeling with
+### Features we didn't include to modeling
+* `original` 
+* `first_clean`
+* `clean`
 
-* Tenure 
-* Monthly Charges
-* Tech Support
+Those features were used in the exploration and do not serve for the modeling.
+N-grams were not created for the modeling.
+
+**The models we created**
+
+We used following classifiers (classification algorithms): 
+- Decision Tree, 
+- Random Forest, 
+- Logistic Regression,
+- Gaussian NB,
+- Multinational NB, 
+- Gradient Boosting, and
+- XGBoost. 
+
+For most of our models we have used `GridSearchCV` algorithm that picked the best feature combinations for our training set. The parameters that we've used you can see below.
+
+To evaluate the models we used the accuracy score. The good outcome is the one where the `accuracy score` is higher than our `baseline` - the propotion of the most popular programming language in our train data set. It is `JavaScript` and `0.35`. So our baseline has the accuracy score - 0.35
 
 ## Modeling Summary:
-* We created several models that try and use our features to predict the primary coding language used in the repository
-* None of the models were within acceptable proximity to actual target results
-*
-- insert later -
-*
-**For this itteration of modeling we have a model that beats baseline.**    
-
-## Comparing Models
-
-- insert later - 
-    
-## ```2nd Degree Polynomial``` is the best model and will likely continue to perform well above Baseline and logerror on the Test data.
-
-# Evaluate on Test: Best Model (```2nd Degree Polynomial```)
+- The best algorithm  is `Random Forest Classifier` with following parameters `{'max_depth': 5, 'min_samples_leaf': 3}`
+- It predicts the programming language with accuracy:
+    - 63% on the train set
+    - 48% on the validate set
+    - 59% on the test set
+- It makes 24% better predictions on the test set that the baseline model.
 
 
 # Conclusions: 
 * **Exploration:** 
-    * We asked 4 Questions using T-Test and Anova Statistical testing to afirm our hypothesis
-    * In general year over year the life expectancy rate seems to maintain an upward trend
-    * Women have a higher life expectany than men
-* **Modeling:**
     * 
-    - insert later -
-    *
+    * 
+    * 
+* **Modeling:**
+    * We have created the model that showed 59% accuracy on the test set.
+    * The results of the model performance are not consistant as the texts from the Readme files don't have a standard and programmers not always describe their work process step by step. That possibly could help our model to pick the outcome in better way.
 * **Recommendations:**
-    * I think we should hold off on deploying this model.
-    * Even though it beat baseline, it came nowhere near actual.
-    * We can acquire a much better dataset given more time
+    * 
+    * 
+    * 
 * **Next Steps:**
-    * I would like to request more time to investigate the data available on the Athena data webservice managed by the World Health Organization.
-    * I also came across some similar projects that I can reference to research their findings in comparison to my own.
+    * 
+    * 
