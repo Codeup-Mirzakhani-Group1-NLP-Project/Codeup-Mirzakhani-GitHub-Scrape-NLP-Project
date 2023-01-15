@@ -216,7 +216,7 @@ def csharp_bigrams_lem(cs_lem):
     _ = plt.yticks(ticks, labels)
 
 
-def csharp_bigrams_clean(cs_lem):
+def csharp_bigrams_clean(cs_clean):
     '''this function will create bar chart that will display top 10 bi grams'''
     # creates c sharp 10 most frequent bigrams 
     top_10_csharp_clean_bigrams = (pd.Series(nltk.ngrams(cs_clean, 2)).value_counts().head(10))
@@ -230,6 +230,46 @@ def csharp_bigrams_clean(cs_lem):
     ticks, _ = plt.yticks()
     labels = top_10_csharp_clean_bigrams.reset_index()['index'].apply(lambda t: t[0] + ' ' + t[1])
     _ = plt.yticks(ticks, labels)
+
+def csharp_bigrams(cs_lem, cs_clean):
+    '''
+    creates sublots to display side_by_side
+    '''
+    # creates c sharp 10 most frequent bigrams 
+    top_10_csharp_lem_bigrams = (pd.Series(nltk.ngrams(cs_lem, 2)).value_counts().head(10))
+    # sorts 
+    
+    # creates c sharp 10 most frequent bigrams 
+    top_10_csharp_clean_bigrams = (pd.Series(nltk.ngrams(cs_clean, 2)).value_counts().head(10))
+    # sorts bi grams and provides bar gram and color of bars
+ 
+
+    plt.figure(figsize=(24, 6))
+    plt.rc('font', size=14)
+    plt.suptitle('10 Most frequently occuring c# bigrams')
+    plt.subplot(121)
+    top_10_csharp_clean_bigrams.sort_values(ascending=True).plot.barh(color='blue', width=.9)
+    plt.title('Cleaned')
+    #plt.ylabel('Bigram')
+    plt.xlabel('# Occurances')
+    # plotting tick marks and resetting index
+    ticks, _ = plt.yticks()
+    labels = top_10_csharp_clean_bigrams.reset_index()['index'].apply(lambda t: t[0] + ' ' + t[1])
+    _ = plt.yticks(ticks, labels)
+
+    plt.subplot(122)
+    top_10_csharp_lem_bigrams.sort_values(ascending=True).plot.barh(color='green', width=.9)
+    plt.title('Lemmatized')
+    #plt.ylabel('Bigram')
+    plt.xlabel('# Occurances')
+
+    # plotting tick marks and resetting index
+    ticks, _ = plt.yticks()
+    labels = top_10_csharp_lem_bigrams.reset_index()['index'].apply(lambda t: t[0] + ' ' + t[1])
+    _ = plt.yticks(ticks, labels)
+    # set the spacing between subplots
+    #fig.tight_layout()
+    plt.show()
 
 def python_bigram_lem(py_lem):
     '''this function will create bar chart that will display top 10 bi grams'''
@@ -261,7 +301,43 @@ def python_bigrams_clean(py_clean):
     labels = top_10_python_clean_bigrams.reset_index()['index'].apply(lambda t: t[0] + ' ' + t[1])
     _ = plt.yticks(ticks, labels)
 
-def anova_test(js_lem_length, jv_lem_length,cs_lem_length,py_lem_length):
+def python_bigrams(py_lem, py_clean):
+    '''
+    displays top10 python bigrams
+    '''
+    # creates bi grams 
+    top_10_python_lem_bigrams = (pd.Series(nltk.ngrams(py_lem, 2)).value_counts().head(10))
+    # creates bi grams 
+    top_10_python_clean_bigrams = (pd.Series(nltk.ngrams(py_clean, 2)).value_counts().head(10))
+    # sorts bi grams and provides bar gram and color of bars
+    plt.figure(figsize=(24, 6))
+    #plt.rc('font', size=14)
+    plt.suptitle('10 Most frequently occuring Python bigrams')
+    plt.subplot(121)
+    top_10_python_lem_bigrams.sort_values(ascending=True).plot.barh(color='brown', width=.9)
+    plt.title('Lemmatized')
+    #plt.ylabel('Bigram')
+    plt.xlabel('# Occurances')
+
+    # plotting tick marks and resetting index
+    ticks, _ = plt.yticks()
+    labels = top_10_python_lem_bigrams.reset_index()['index'].apply(lambda t: t[0] + ' ' + t[1])
+    _ = plt.yticks(ticks, labels)
+
+
+    # sorts bi grams and provides bar gram and color of bars
+    plt.subplot(122)
+    top_10_python_clean_bigrams.sort_values(ascending=True).plot.barh(color='black', width=.9)
+    plt.title('Cleaned')
+    #plt.ylabel('Bigram')
+    plt.xlabel('# Occurances')
+    # plotting tick marks and resetting index
+    ticks, _ = plt.yticks()
+    labels = top_10_python_clean_bigrams.reset_index()['index'].apply(lambda t: t[0] + ' ' + t[1])
+    _ = plt.yticks(ticks, labels)
+
+
+def kruskal_test(js_lem_length, jv_lem_length,cs_lem_length,py_lem_length):
     # statistical test results, 
     return stats.kruskal(js_lem_length, jv_lem_length,cs_lem_length,py_lem_length)
 
@@ -306,6 +382,7 @@ def qmcbt_viz_05():
     # Display top Bi-Gram pair for JavaScript lemmatized
     pd.Series(js_2_gram).value_counts().head(5).plot.barh()
     plt.title('JavaScript Bi-Grams')
+    plt.gca().invert_yaxis()
     return plt.show()
 
 def qmcbt_viz_06():
