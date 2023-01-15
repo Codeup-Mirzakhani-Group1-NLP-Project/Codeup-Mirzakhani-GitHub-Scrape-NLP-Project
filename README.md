@@ -159,7 +159,7 @@ We acquired 432 entries.
 * There is no significant difference in the length of the lemmatized text among the languages.
 * There is no significant difference in the compound sentiment score among the languages.
 
-## Modeling
+# Modeling
 
 ### Features that will be selected for Modeling:
 * All continious variables:
