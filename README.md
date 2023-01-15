@@ -58,23 +58,21 @@ Our initial thoughts were that since we centered our `GitHub` repositories aroun
 * Acquire data from `GitHub` `Readme` files by scraping the `Github API`
 * Clean and Prepare the data using `RegEx` and `Beautiful soup`.
 * Explore data in search of relevant keyword grouping using bi-grams and n-grams 
-* Answer the following initial question:
+* Answer the following initial questions:
 
     * **Question 1.** How is the target variable represented in the sample?
+    
+    * **Question 2.** Are there any specific words or word groups that can assist with identifying the Language JavaScript or Java over the other languages?
 
-    * **Question 2.** What are the top words used in cleaned C#?
+    * **Question 3.** What are the top words used in cleaned C#?
 
-    * **Question 3.** What are the most used words in cleaned python strings?
+    * **Question 4.** What are the most used words in cleaned python strings?
+    
+    * **Question 5.** Is there an association between coding language and the lemmatized mean length of the string?
+    
+    * **Question 6.** Is there a significant difference in Sentiment across all four languages?
 
-    * **Question 4.** Are there differences between the clean and lemmatized C# bi grams?
-
-    * **Question 5.** Are there differences between the clean and lemmatized python bi grams?
-
-    * **Question 6.** Is there an association between coding language and the lemmatized mean length of the string?
-
-    * **Question 7.** Are there any specific words or word groups that can assist with identifying the Language JavaScript or Java over the other languages?
-
-    * **Question 8.** Is there a significant difference in Sentiment across all four languages?
+    * **Question 7.** How different are the bi-grams among four programming languages?
 
 
 * Develop a Model to predict program language of space related projects using either `Python`, `Javascript`, `Java`, or `C#` based on input from `GitHub` Project `Readme` files.
@@ -158,8 +156,9 @@ We acquired 432 entries.
 * Most used in **Python** is `python`.
 * The words that identifies **Java** most are `x` and `planet`.
 * Most appearing bigram in **Javascript** is "bug fixed".
-* There is no significant difference in the length of the lemmatized text among the languages.
-* There is no significant difference in the compound sentiment score among the languages.
+* Bi-grams different a lot among the programming languages `Readme` files, but the number of most occuring bi-grams is not big enough to use them in our modeling.
+* There is *no significant difference* in the length of the lemmatized text among the languages.
+* There is *no significant difference* in the compound sentiment score among the languages.
 
 # Modeling
 
