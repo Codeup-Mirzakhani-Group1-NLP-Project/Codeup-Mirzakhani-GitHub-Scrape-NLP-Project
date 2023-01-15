@@ -206,8 +206,13 @@ To evaluate the models we used the accuracy score. The good outcome is the one w
 ## **Exploration:**
 * In the space thematic Javascript is the most popular language. It makes up 35% of the data sample.
 * Most popular "word" in **C#** is `&#9;`.
+* The word `codeblock` appears only in **Python** repositories. 
 * Most used in **Python** is `python`.
-* There is no significant difference in the length of the lemmatized text among the languages.
+* The words that identifies **Java** most are `x` and `planet`.
+* Most appearing bigram in **Javascript** is "bug fixed".
+* Bi-grams different a lot among the programming languages `Readme` files, but the number of most occuring bi-grams is not big enough to use them in our modeling.
+* There is *no significant difference* in the length of the lemmatized text among the languages.
+* There is *no significant difference* in the compound sentiment score among the languages.
 
 ## **Modeling:**
  * We have created the model that showed 59% accuracy on the test set.
