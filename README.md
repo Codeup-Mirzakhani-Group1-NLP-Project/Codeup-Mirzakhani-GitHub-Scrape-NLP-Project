@@ -51,15 +51,22 @@ Our initial thoughts were that since we centered our `GitHub` repositories aroun
 * Explore data in search of relevant keyword grouping using bi-grams and n-grams 
 * Answer the following initial question:
 
-    * **Question 1.** INSERT_QUESTION_HERE? 
+    * **Question 1.** How is the target variable represented in the sample?
 
-    * **Question 2.** INSERT_QUESTION_HERE?
+    * **Question 2.** What are the top words used in cleaned C#?
 
-    * **Question 3.** INSERT_QUESTION_HERE? 
+    * **Question 3.** What are the most used words in cleaned python strings?
 
-    * **Question 4.** INSERT_QUESTION_HERE?
+    * **Question 4.** Are there difference between the clean and lemmatized C# bi grams?
 
-    * **Question 5.** INSERT_QUESTION_HERE?
+    * **Question 5.** Are there differences between the clean and lemmatized python bi grams?
+
+    * **Question 6.** Is there an association between coding language and the lemmatized mean of string lengths across languages?
+
+    * **Question 7.** Are there any specific words or word groups that can assist with identifying the Language JavaScript or Java over the other languages?
+
+    * **Question 8.** Is there a significant difference in Sentiment across all four languages?
+
 
 * Develop a Model to predict program language of space related projects using either `Python`, `Javascript`, `Java`, or `C#` based on input from `GitHub` Project `Readme` files.
     * Evaluate models on train and validate data using accuracy score
