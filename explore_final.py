@@ -177,6 +177,98 @@ def sort_by_language(variable,cs_freq_clean,js_freq_clean, jv_freq_clean, py_fre
     # filtering most words by column
     return clean_wordcount.sort_values(by=variable, ascending=False).head(10)
 
+# STAT TEST
+def kruskal_test(js_lem_length, jv_lem_length,cs_lem_length,py_lem_length):
+    # statistical test results, 
+    return stats.kruskal(js_lem_length, jv_lem_length,cs_lem_length,py_lem_length)
+
+######### COMPARE BI-GRAMS #############
+def csharp_java_bigrams(cs_clean, jv_clean):
+    '''
+    creates sublots to display side_by_side
+    c# and java bigrams
+    '''
+    # creates c sharp 10 most frequent bigrams 
+    top_10_java_bigrams = (pd.Series(nltk.ngrams(jv_clean, 2)).value_counts().head(10))
+    # sorts 
+    
+    # creates c sharp 10 most frequent bigrams 
+    top_10_csharp_bigrams = (pd.Series(nltk.ngrams(cs_clean, 2)).value_counts().head(10))
+ 
+    # plot bigrams
+    plt.figure(figsize=(24, 6))
+    plt.rc('font', size=14)
+    plt.suptitle('10 Most frequently occuring bigrams')
+
+    # 1st subplot C#
+    plt.subplot(121)
+    top_10_csharp_bigrams.plot.barh(color='blue', width=.9)
+    plt.title('C#')
+    plt.xlabel('# Occurances')
+    # plotting tick marks and resetting index
+    ticks, _ = plt.yticks()
+    labels = top_10_csharp_bigrams.reset_index()['index'].apply(lambda t: t[0] + ' ' + t[1])
+    _ = plt.yticks(ticks, labels)
+    plt.gca().invert_yaxis()
+
+    # 2nd subplot Java bigrams
+    plt.subplot(122)
+    top_10_java_bigrams.plot.barh(color='green', width=.9)
+    plt.title('Java')
+    plt.xlabel('# Occurances')
+
+    # plotting tick marks and resetting index
+    ticks, _ = plt.yticks()
+    labels = top_10_java_bigrams.reset_index()['index'].apply(lambda t: t[0] + ' ' + t[1])
+    _ = plt.yticks(ticks, labels)
+    plt.gca().invert_yaxis()
+
+    plt.show()
+
+def python_js_bigrams(py_clean, js_clean):
+    '''
+    creates sublots to display side_by_side
+    javascript and python bigrams
+    '''
+    # creates c sharp 10 most frequent bigrams 
+    top_10_js_bigrams = (pd.Series(nltk.ngrams(js_clean, 2)).value_counts().head(10))
+    # sorts 
+    
+    # creates c sharp 10 most frequent bigrams 
+    top_10_python_bigrams = (pd.Series(nltk.ngrams(py_clean, 2)).value_counts().head(10))
+    
+    # plot bigrams
+    plt.figure(figsize=(24, 6))
+    plt.rc('font', size=14)
+    plt.suptitle('10 Most frequently occuring bigrams')
+
+    # 1st subplot Javascript
+    plt.subplot(121)
+    top_10_js_bigrams.plot.barh(color='indianred', width=.9)
+    plt.title('Javascript')
+    plt.xlabel('# Occurances')
+    # plotting tick marks and resetting index
+    ticks, _ = plt.yticks()
+    labels = top_10_js_bigrams.reset_index()['index'].apply(lambda t: t[0] + ' ' + t[1])
+    _ = plt.yticks(ticks, labels)
+    plt.gca().invert_yaxis()
+
+    # 2nd subplot Python bigrams
+    plt.subplot(122)
+    top_10_python_bigrams.plot.barh(color='darkviolet', width=.9)
+    plt.title('Python')
+    plt.xlabel('# Occurances')
+
+    # plotting tick marks and resetting index
+    ticks, _ = plt.yticks()
+    labels = top_10_python_bigrams.reset_index()['index'].apply(lambda t: t[0] + ' ' + t[1])
+    _ = plt.yticks(ticks, labels)
+    plt.gca().invert_yaxis()
+
+    plt.show()
+############## END OF COMPARE BI-GRAMS ###########
+
+############## LEMMATIZED VS CLEAN BI-GRAMS ###########
 
 def csharp_bigrams_lem(cs_lem):
     '''this function will create bar chart that will display top 10 bi grams'''
@@ -250,86 +342,6 @@ def csharp_bigrams(cs_lem, cs_clean):
     #fig.tight_layout()
     plt.show()
 
-def csharp_java_bigrams(cs_clean, jv_clean):
-    '''
-    creates sublots to display side_by_side
-    c# and java bigrams
-    '''
-    # creates c sharp 10 most frequent bigrams 
-    top_10_java_bigrams = (pd.Series(nltk.ngrams(jv_clean, 2)).value_counts().head(10))
-    # sorts 
-    
-    # creates c sharp 10 most frequent bigrams 
-    top_10_csharp_bigrams = (pd.Series(nltk.ngrams(cs_clean, 2)).value_counts().head(10))
- 
-    # plot bigrams
-    plt.figure(figsize=(24, 6))
-    plt.rc('font', size=14)
-    plt.suptitle('10 Most frequently occuring bigrams')
-
-    # 1st subplot C#
-    plt.subplot(121)
-    top_10_csharp_bigrams.sort_values(ascending=True).plot.barh(color='blue', width=.9)
-    plt.title('C#')
-    plt.xlabel('# Occurances')
-    # plotting tick marks and resetting index
-    ticks, _ = plt.yticks()
-    labels = top_10_csharp_bigrams.reset_index()['index'].apply(lambda t: t[0] + ' ' + t[1])
-    _ = plt.yticks(ticks, labels)
-
-    # 2nd subplot Java bigrams
-    plt.subplot(122)
-    top_10_java_bigrams.sort_values(ascending=True).plot.barh(color='green', width=.9)
-    plt.title('Java')
-    plt.xlabel('# Occurances')
-
-    # plotting tick marks and resetting index
-    ticks, _ = plt.yticks()
-    labels = top_10_java_bigrams.reset_index()['index'].apply(lambda t: t[0] + ' ' + t[1])
-    _ = plt.yticks(ticks, labels)
-
-    plt.show()
-
-def python_js_bigrams(py_clean, js_clean):
-    '''
-    creates sublots to display side_by_side
-    javascript and python bigrams
-    '''
-    # creates c sharp 10 most frequent bigrams 
-    top_10_js_bigrams = (pd.Series(nltk.ngrams(js_clean, 2)).value_counts().head(10))
-    # sorts 
-    
-    # creates c sharp 10 most frequent bigrams 
-    top_10_python_bigrams = (pd.Series(nltk.ngrams(py_clean, 2)).value_counts().head(10))
-    
-    # plot bigrams
-    plt.figure(figsize=(24, 6))
-    plt.rc('font', size=14)
-    plt.suptitle('10 Most frequently occuring bigrams')
-
-    # 1st subplot Javascript
-    plt.subplot(121)
-    top_10_js_bigrams.sort_values(ascending=True).plot.barh(color='indianred', width=.9)
-    plt.title('Javascript')
-    plt.xlabel('# Occurances')
-    # plotting tick marks and resetting index
-    ticks, _ = plt.yticks()
-    labels = top_10_js_bigrams.reset_index()['index'].apply(lambda t: t[0] + ' ' + t[1])
-    _ = plt.yticks(ticks, labels)
-
-    # 2nd subplot Python bigrams
-    plt.subplot(122)
-    top_10_python_bigrams.sort_values(ascending=True).plot.barh(color='darkviolet', width=.9)
-    plt.title('Python')
-    plt.xlabel('# Occurances')
-
-    # plotting tick marks and resetting index
-    ticks, _ = plt.yticks()
-    labels = top_10_python_bigrams.reset_index()['index'].apply(lambda t: t[0] + ' ' + t[1])
-    _ = plt.yticks(ticks, labels)
-
-    plt.show()
-
 def python_bigram_lem(py_lem):
     '''this function will create bar chart that will display top 10 bi grams'''
     # creates bi grams 
@@ -395,10 +407,8 @@ def python_bigrams(py_lem, py_clean):
     labels = top_10_python_clean_bigrams.reset_index()['index'].apply(lambda t: t[0] + ' ' + t[1])
     _ = plt.yticks(ticks, labels)
 
+############## END OF LEMMATIZED VS CLEAN BI-GRAMS ###########
 
-def kruskal_test(js_lem_length, jv_lem_length,cs_lem_length,py_lem_length):
-    # statistical test results, 
-    return stats.kruskal(js_lem_length, jv_lem_length,cs_lem_length,py_lem_length)
 
 
 
