@@ -202,17 +202,17 @@ To evaluate the models we used the accuracy score. The good outcome is the one w
 
 
 # Conclusions: 
-* **Exploration:** 
-    * 
-    * 
-    * 
-* **Modeling:**
-    * We have created the model that showed 59% accuracy on the test set.
-    * The results of the model performance are not consistant as the texts from the Readme files don't have a standard and programmers not always describe their work process step by step. That possibly could help our model to pick the outcome in better way.
-* **Recommendations:**
-    * 
-    * 
-    * 
-* **Next Steps:**
-    * 
-    * 
+## **Exploration:**
+ * WORDS
+ * WORDS
+ * WORDS
+## **Modeling:**
+ * We have created the model that showed 59% accuracy on the test set.
+ * The results of the model performance are not consistant as the texts from the Readme files don't have a standard and programmers not always describe their work process step by step. That possibly could help our model to pick the outcome in better way.
+## **Recommendations:**
+ * WORDS
+ * WORDS
+ * WORDS
+## **Next Steps:**
+ * WORDS
+ * WORDS
