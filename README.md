@@ -14,15 +14,18 @@
 ## Meet Group 1
 |Team Member         |[LinkedIn]                                               |[GitHub]                              |
 |:-------------------|:--------------------------------------------------------|:-------------------------------------|
-|Justin Evans        |[![LinkedIn](https://img.shields.io/badge/Justin's%20linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/qmcbt)|[![GitHub](https://img.shields.io/badge/Justin's%20GitHub-222222?style=for-the-badge&logo=GitHub%20Pages&logoColor=white)](https://github.com/QMCBT-JustinEvans)|
-|Nadia Paz           |[![LinkedIn](https://img.shields.io/badge/Nadia's%20linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/nadiapaz)|[![GitHub](https://img.shields.io/badge/Nadia's%20GitHub-222222?style=for-the-badge&logo=GitHub%20Pages&logoColor=white)](https://github.com/nadia-paz)|
-|Allante Staten      |[![LinkedIn](https://img.shields.io/badge/Allante's%20linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/allantestaten)|[![GitHub](https://img.shields.io/badge/Allante's%20GitHub-222222?style=for-the-badge&logo=GitHub%20Pages&logoColor=white)](https://github.com/allantestaten)|
-|Zachary Stufflebeme |[![LinkedIn](https://img.shields.io/badge/Zachary's%20linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/zachary-stufflebeme-63379a243)|[![GitHub](https://img.shields.io/badge/Zachary's%20GitHub-222222?style=for-the-badge&logo=GitHub%20Pages&logoColor=white)](https://github.com/Zachary-Stufflebeme)|
+|Justin Evans        |[![LinkedIn](https://img.shields.io/badge/Justin's%20linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/qmcbt)|[![GitHub](https://img.shields.io/badge/Justin's%20GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/QMCBT-JustinEvans)|
+|Nadia Paz           |[![LinkedIn](https://img.shields.io/badge/Nadia's%20linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/nadiapaz)|[![GitHub](https://img.shields.io/badge/Nadia's%20GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/nadia-paz)|
+|Allante Staten      |[![LinkedIn](https://img.shields.io/badge/Allante's%20linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/allantestaten)|[![GitHub](https://img.shields.io/badge/Allante's%20GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/allantestaten)|
+|Zachary Stufflebeme |[![LinkedIn](https://img.shields.io/badge/Zachary's%20linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/zachary-stufflebeme-63379a243)|[![GitHub](https://img.shields.io/badge/Zachary's%20GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Zachary-Stufflebeme)|
 
 # Project Overview:
-This team was tasked to build a model that can predict the main programming language of a repository using data from the GitHub repository README files.
+This team was tasked to build a model that can predict the main programming language of space themed repositories that are either Python, Java, Javascript, or C# using data from the GitHub repository README files.
 
-Using **Natural Language Processing** and following the full *Data Science Pipeline*
+We will attempt to accomplish this Using **Natural Language Processing** and following the full *Data Science Pipeline*
+We will explore the data and use insights gained to feature engineer our dataset to try and improve our models accuracy
+We will create and run  multiple models on the final manipulations of our data on train and validation sets and find our best/most efficient model.
+We will than test that model on more outside data and create a function that will take in a readme file text and output the models assignment of the texts main coding language.
 
 
 # Project Goals:
