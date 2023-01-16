@@ -203,24 +203,17 @@ To evaluate the models we used the accuracy score. The good outcome is the one w
 
 
 # Conclusions: 
-## **Exploration:**
-* In the space thematic Javascript is the most popular language. It makes up 35% of the data sample.
-* Most popular "word" in **C#** is `&#9;`.
-* The word `codeblock` appears only in **Python** repositories. 
-* Most used in **Python** is `python`.
-* The words that identifies **Java** most are `x` and `planet`.
-* Most appearing bigram in **Javascript** is "bug fixed".
-* Bi-grams different a lot among the programming languages `Readme` files, but the number of most occuring bi-grams is not big enough to use them in our modeling.
-* There is *no significant difference* in the length of the lemmatized text among the languages.
-* There is *no significant difference* in the compound sentiment score among the languages.
+The goals of the project were:
+- Scrape Readme files from the GitHub repositories.
+- Analyzie the data.
+- Build the classification model that can predict the programming language of the repository with the accuracy score higher than 35%.
+ Result:
 
-## **Modeling:**
- * We have created the model that showed 59% accuracy on the test set.
- * The results of the model performance are not consistant as the texts from the Readme files don't have a standard and programmers not always describe their work process step by step. That possibly could help our model to pick the outcome in better way.
-## **Recommendations:**
- * WORDS
- * WORDS
- * WORDS
-## **Next Steps:**
- * Retrieve more data to train the model on and potentially identify better features for the model
- * WORDS
+- Even with the small amount of unorganized data it is possible to perform an exploraion analysis and identify the words that are helping to predict the programming language. We pulled 432 GitHub reposittories with the space theme in four programming languages: Javascript, Java, Python and C#.
+- We built the model that has an accuracy scoreof 59%.
+- Despite the statistical tests showed that engineered features are not significant, one of our models showed their importance and adding those features to our modeling improved a bit its performance of all of models.
+
+
+## **Recommendations and next steps:**
+- Retrieve more data to train the model on and potentially identify better features for the model
+- Possibly perform less cleaning, leave the code in markdown.
