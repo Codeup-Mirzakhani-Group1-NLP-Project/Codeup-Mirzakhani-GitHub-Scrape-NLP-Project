@@ -210,11 +210,12 @@ To evaluate the models we used the accuracy score. The good outcome is the one w
 
 
 # Conclusions: 
-The goals of the project were:
+*The goals of the project were:*
 - Scrape Readme files from the GitHub repositories.
 - Analyzie the data.
 - Build the classification model that can predict the programming language of the repository with the accuracy score higher than 35%.
- Result:
+
+*Result:*
 
 - Even with the small amount of unorganized data it is possible to perform an exploraion analysis and identify the words that are helping to predict the programming language. We pulled 432 GitHub reposittories with the space theme in four programming languages: Javascript, Java, Python and C#.
 - We built the model that has an accuracy scoreof 59%.
