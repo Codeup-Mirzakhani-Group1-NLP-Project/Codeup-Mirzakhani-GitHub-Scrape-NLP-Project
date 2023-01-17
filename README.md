@@ -103,7 +103,10 @@ Our initial thoughts were that since we centered our `GitHub` repositories aroun
 |`lem_length`|The length of the lemmatized text in symbols|
 |`original_length`|The length of the original text in symbols|
 |`length_diff`|The difference in length between the orignal_length and the length of the `clean` text|
-||**Target variable:**|
+
+## Target Variable
+|Feature    |Description       |
+|:----------|:-----------------|
 |`language`|`JavaScript`, `C#`, `Java` or `Python` programming languages|
 
 
@@ -144,17 +147,17 @@ We acquired 432 entries.
 
 ## A Summary of the data
 
-### There are 432 records (rows) in our training data consisting of 1621 features (columns).
-* There are 1618 categorical features
+### There are 432 records (rows) in our data consisting of 1621 features (columns).
+* There are 1616 categorical features
 * There are 4 continuous features that represent measurements of value, size, time, or ratio.
-
+* One of the columns contains our target feature 'language'
 
 # Explore
 
 * In the exploration part we tried to identify if there are words, bigrams or trigrams that could help our model to identify the programming language. 
 * We ran statistical tests on the numerical features that we have created.
-* Explore differences between cleaned and lemmatized versions of c# and python.
-* Explore association between coding language and the lemmatized mean of string lengths.
+* We explored differences between cleaned and lemmatized versions of c# and python.
+* We explore the association between coding language and the lemmatized mean of string lengths.
 
 ## Exploration Summary of Findings:
 * In the space thematic Javascript is the most popular language. It makes up 35% of the data sample.
@@ -223,5 +226,6 @@ To evaluate the models we used the accuracy score. The good outcome is the one w
 
 
 ## **Recommendations and next steps:**
-- Retrieve more data to train the model on and potentially identify better features for the model
+- Retrieve more data to train the model on and potentially identify better features for the model.
 - Possibly perform less cleaning, leave the code in markdown.
+- Collect data on more languages to give the model more utility after production.
