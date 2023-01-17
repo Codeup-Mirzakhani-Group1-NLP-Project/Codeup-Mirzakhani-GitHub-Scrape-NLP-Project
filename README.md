@@ -4,7 +4,7 @@
 * Click the buttons below to see the Project Repo and Canva presentation.  
 
 [![GitHub](https://img.shields.io/badge/Project%20GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Codeup-Mirzakhani-Group1-NLP-Project/Codeup-Mirzakhani-GitHub-Scrape-NLP-Project)
-[![Canva](https://img.shields.io/badge/Project%20Canva-%2300C4CC.svg?style=for-the-badge&logo=Canva&logoColor=white)](https://www.canva.com/design/DAFXYtmJecw/zcgBWNIuZw722jgt14ferg/edit)
+[![Canva](https://img.shields.io/badge/Project%20Canva-%2300C4CC.svg?style=for-the-badge&logo=Canva&logoColor=white)](https://www.canva.com/design/DAFXYtmJecw/zcgBWNIuZw722jgt14ferg/edit?utm_content=DAFXYtmJecw&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
 
 <!--
 ## Meet Group 1
